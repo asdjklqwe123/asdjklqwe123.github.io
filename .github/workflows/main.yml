@@ -1,7 +1,8 @@
+# .github/workflows/deploy-pages.yml
 on:
   push:
     branches:
-      - main
+      - main  # 或你实际推送的分支
 
 jobs:
   build-and-deploy:
@@ -9,15 +10,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # 保持凭据（通常默认即可）
 
       - name: Build site
-        # 如果是纯静态没有构建，删除或改成适合你的构建命令，例如 npm run build
         run: |
-          # 示例：如果你使用静态生成器，将构建产物放到 ./public 或 ./dist
-          echo "如果需要构建，请替换这一步为你的构建命令，例如 npm ci && npm run build"
+          # 替换为你的构建命令（如果是纯静态站点，无需构建）
+          # 例如：npm ci && npm run build
+          echo "Build step placeholder - replace with your build command"
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}  # 使用你创建的 PAT
+          publish_dir: ./public  # 改为你的输出目录（dist, public, _site 等）
+          # target_branch: gh-pages  # 可选：默认是 gh-pages
