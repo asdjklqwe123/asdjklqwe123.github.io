@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客文章</title>
+    <!-- 引入 marked.js 用于解析 Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        img { max-width: 100%; }
+        pre { background: #f4f4f4; padding: 15px; overflow-x: auto; border-radius: 5px; }
+        blockquote { border-left: 4px solid #ccc; margin: 0; padding-left: 16px; color: #666; }
+        a { color: blue; text-decoration: none; }
+        .nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html">← 返回博客列表</a>
+    </div>
+    
+    <div id="content">正在加载文章...</div>
+
+    <script>
+        // 获取 URL 参数中的文件名
+        const params = new URLSearchParams(window.location.search);
+        const filename = params.get('file');
+
+        if (!filename) {
+            document.getElementById('content').innerHTML = '错误：未指定文章文件。';
+        } else {
+            // 加载 posts 目录下的对应文件
+            fetch('posts/' + filename)
+                .then(response => {
+                    if (!response.ok) throw new Error('文件不存在');
+                    return response.text();
+                })
+                .then(markdown => {
+                    // 使用 marked 解析 markdown 为 html
+                    document.getElementById('content').innerHTML = marked.parse(markdown);
+                    // 设置网页标题
+                    document.title = filename.replace('.md', '');
+                })
+                .catch(error => {
+                    document.getElementById('content').innerHTML = '加载失败：' + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
