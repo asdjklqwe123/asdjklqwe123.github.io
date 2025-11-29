@@ -23,12 +23,8 @@
     <div id="status">轮到玩家 X</div>
     
     <div style="margin-bottom: 15px;">
-        <label style="margin-right: 15px; cursor: pointer;">
-            <input type="radio" name="mode" value="pvp" checked onchange="setMode('pvp')"> 人人对战
-        </label>
-        <label style="cursor: pointer;">
-            <input type="radio" name="mode" value="pve" onchange="setMode('pve')"> 人机对战 (AI)
-        </label>
+        <input type="text" id="playerName" placeholder="请输入你的名字" style="padding: 5px; margin-right: 10px;">
+        <strong>当前模式：人机对战 (AI)</strong>
     </div>
 
     <div class="board" id="board">
@@ -53,7 +49,7 @@
         let currentPlayer = 'X';
         let gameActive = true;
         let gameState = ["", "", "", "", "", "", "", "", ""];
-        let gameMode = 'pvp'; // 'pvp' 或 'pve'
+        const gameMode = 'pve';
         const statusDisplay = document.getElementById('status');
         
         // 你的 Vercel 项目地址 (本地开发时可能是 http://localhost:3000)
@@ -90,11 +86,6 @@
 
             handleCellPlayed(clickedCell, clickedCellIndex);
             handleResultValidation();
-        }
-
-        function setMode(mode) {
-            gameMode = mode;
-            resetGame();
         }
 
         async function makeAIMove() {
@@ -147,9 +138,19 @@
             }
 
             if (roundWon) {
-                statusDisplay.innerHTML = `玩家 ${currentPlayer} 获胜!`;
+                let winnerName = currentPlayer;
+                const inputName = document.getElementById('playerName').value.trim();
+
+                // 人机模式：如果是玩家(X)赢了，用输入的名字；如果是AI(O)赢了，叫 'AI'
+                if (currentPlayer === 'X') {
+                    winnerName = inputName || '玩家';
+                } else {
+                    winnerName = 'AI';
+                }
+
+                statusDisplay.innerHTML = `${winnerName} 获胜!`;
                 gameActive = false;
-                saveGame(currentPlayer);
+                saveGame(winnerName);
                 return;
             }
 
