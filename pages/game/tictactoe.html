@@ -23,7 +23,7 @@
     <div id="status">轮到玩家 X</div>
     
     <div style="margin-bottom: 15px;">
-        <input type="text" id="playerName" placeholder="请输入你的名字" style="padding: 5px; margin-right: 10px;">
+        <input type="text" id="playerName" placeholder="请输入你的名字" style="padding: 5px; margin-right: 10px;" oninput="checkEasterEgg(this.value)">
         <strong>当前模式：人机对战 (AI)</strong>
     </div>
 
@@ -148,17 +148,17 @@
                     winnerName = 'AI';
                 }
 
-                statusDisplay.innerHTML = `${winnerName} 获胜!`;
+                statusDisplay.textContent = `${winnerName} 获胜!`;
                 gameActive = false;
-                saveGame(winnerName);
+                saveGame(winnerName, 'win');
                 return;
             }
 
             let roundDraw = !gameState.includes("");
             if (roundDraw) {
-                statusDisplay.innerHTML = `平局!`;
+                statusDisplay.textContent = `平局!`;
                 gameActive = false;
-                saveGame('Draw');
+                saveGame('Draw', 'draw');
                 return;
             }
 
@@ -182,14 +182,15 @@
             });
         }
 
-        async function saveGame(winner) {
+        async function saveGame(winner, type) {
             try {
                 await fetch(`${API_URL}/save_game`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         winner: winner,
-                        moves: gameState
+                        moves: gameState,
+                        type: type
                     })
                 });
                 loadHistory(); // 刷新记录
@@ -204,26 +205,79 @@
                 const data = await res.json();
                 const list = document.getElementById('history-list');
                 
+                // 清空现有内容
+                list.innerHTML = '';
+
                 if (data.length === 0) {
-                    list.innerHTML = '暂无记录';
+                    list.textContent = '暂无记录';
                     return;
                 }
 
-                list.innerHTML = data.map(game => {
-                    const date = new Date(game.timestamp).toLocaleString();
-                    const result = game.winner === 'Draw' ? '平局' : `玩家 ${game.winner} 获胜`;
-                    return `<div class="history-item">
-                        <strong>${result}</strong> <span style="color:#888; font-size:0.8em">${date}</span>
-                    </div>`;
-                }).join('');
+                data.forEach(game => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'history-item';
+
+                    const strong = document.createElement('strong');
+                    
+                    // 完善后的逻辑：优先判断 type 字段
+                    if (game.type === 'draw') {
+                        strong.textContent = '平局';
+                    } else if (game.type === 'win') {
+                        strong.textContent = `玩家 ${game.winner} 获胜`;
+                    } else {
+                        // 兼容旧数据：没有 type 字段时，回退到旧的判断逻辑
+                        if (game.winner === 'Draw') {
+                            strong.textContent = '平局';
+                        } else {
+                            strong.textContent = `玩家 ${game.winner} 获胜`;
+                        }
+                    }
+
+                    const dateSpan = document.createElement('span');
+                    dateSpan.style.color = '#888';
+                    dateSpan.style.fontSize = '0.8em';
+                    dateSpan.style.marginLeft = '10px';
+                    dateSpan.textContent = new Date(game.timestamp).toLocaleString();
+
+                    itemDiv.appendChild(strong);
+                    itemDiv.appendChild(dateSpan);
+                    list.appendChild(itemDiv);
+                });
+
             } catch (error) {
                 console.error('加载记录失败:', error);
-                document.getElementById('history-list').innerHTML = '加载记录失败，请检查网络或 API 配置。';
+                const list = document.getElementById('history-list');
+                list.innerHTML = '';
+                list.textContent = '加载记录失败，请检查网络或 API 配置。';
             }
         }
 
         // 页面加载时获取历史记录
         loadHistory();
+
+        // 彩蛋功能
+        function checkEasterEgg(value) {
+            if (value.toLowerCase() === 'vercel') {
+                document.body.style.backgroundColor = 'black';
+                document.body.style.color = 'white';
+                document.querySelector('h1').textContent = 'Vercel Mode Activated ▲';
+                document.querySelectorAll('.cell').forEach(c => {
+                    c.style.backgroundColor = '#333';
+                    c.style.color = 'white';
+                });
+            } else if (value === '彩蛋') {
+                alert('懒得改');
+            } else {
+                // 恢复默认
+                document.body.style.backgroundColor = '';
+                document.body.style.color = '';
+                document.querySelector('h1').textContent = '井字棋';
+                document.querySelectorAll('.cell').forEach(c => {
+                    c.style.backgroundColor = '#eee';
+                    c.style.color = '';
+                });
+            }
+        }
     </script>
 </body>
 </html>
