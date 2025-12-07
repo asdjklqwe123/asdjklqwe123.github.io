@@ -25,10 +25,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const gameData = req.body;
+    const { winner, moves, type } = req.body;
     
-    // 添加服务器端时间戳
-    gameData.timestamp = new Date().toISOString();
+    const gameData = {
+        winner,
+        moves,
+        type: type || (winner === 'Draw' ? 'draw' : 'win'), // 兼容旧逻辑
+        timestamp: new Date().toISOString()
+    };
 
     // 将数据存入 Redis 列表 'game_history'
     await redis.lpush('game_history', gameData);
