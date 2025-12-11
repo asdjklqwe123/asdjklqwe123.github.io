@@ -6,6 +6,8 @@
     <title>博客文章</title>
     <!-- 引入 marked.js 用于解析 Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- 引入 crypto-js 用于密码校验 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
         body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
         img { max-width: 100%; }
@@ -40,6 +42,23 @@
         // 获取 URL 参数中的文件名
         const params = new URLSearchParams(window.location.search);
         const filename = params.get('file');
+
+        // 定义受保护的文章及其密码的 SHA256 哈希值
+        const protectedPosts = {
+            '上锁.md': 'cc0192d3cdb44a9ab2c874423f5734aebb17a960b28df2da6ff3a4cb8c202a87'
+        };
+
+        // 检查是否需要密码
+        if (filename && protectedPosts[filename]) {
+            const input = prompt('该文章已上锁，请输入密码访问：');
+            // 如果用户取消或输入错误
+            if (!input || CryptoJS.SHA256(input).toString() !== protectedPosts[filename]) {
+                alert('密码错误或未输入，将返回文章列表。');
+                window.location.href = 'index.html';
+                // 抛出错误以停止后续代码执行
+                throw new Error('Access denied');
+            }
+        }
 
         if (!filename) {
             document.getElementById('content').innerHTML = '错误：未指定文章文件。';
