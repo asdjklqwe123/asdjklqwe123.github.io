@@ -1,10 +1,10 @@
-# Decap CMS — Vercel OAuth
+# Decap CMS — Netlify OAuth
 backend:
   name: github
   repo: asdjklqwe123/asdjklqwe123.github.io
   branch: main
-  base_url: https://asdjklqwe123-github-io.vercel.app
-  auth_endpoint: /api/auth
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 site_url: https://asdjklqwe123.github.io
 media_folder: public/images
