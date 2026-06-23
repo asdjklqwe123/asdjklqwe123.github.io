@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config'
 export default defineConfig({
   site: 'https://asdjklqwe123.github.io',
   base: '/',
-  trailingSlash: 'always',
+  trailingSlash: 'never',
 
   // 开发服务器配置
   server: {
