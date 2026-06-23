@@ -4,16 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>内容管理 - asdjklqwe123's Blog</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-    // Netlify Identity 会在页面加载后自动处理登录流程
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on("init", function(user) {
         if (!user) {
           window.netlifyIdentity.open("login");
         }
+      });
+      window.netlifyIdentity.on("login", function() {
+        document.location.href = "/admin/";
       });
       window.netlifyIdentity.init();
     }
