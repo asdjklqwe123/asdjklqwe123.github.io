@@ -1,10 +1,5 @@
-# Netlify 配置 — OAuth 认证函数
-# 博客托管在 GitHub Pages，Netlify 仅用于运行 OAuth 回调函数
+# Netlify 配置 — 博客部署 + Decap CMS 在线编辑
 
 [build]
-  command = "echo 'OAuth function only'"
-  publish = "."
-
-[functions]
-  node_bundler = "esbuild"
-  directory = "netlify/functions"
+  command = "npm run build"
+  publish = "dist"
