@@ -1,10 +1,10 @@
-# Decap CMS 配置
-# 当前使用 GitHub 网页编辑器方式，未来可配置 OAuth
-
+# Decap CMS 配置 — Vercel OAuth
 backend:
   name: github
   repo: asdjklqwe123/asdjklqwe123.github.io
   branch: main
+  base_url: https://asdjklqwe123-github-io.vercel.app
+  auth_endpoint: /api/auth
 
 site_url: https://asdjklqwe123.github.io
 
