@@ -1,14 +1,12 @@
-# Decap CMS 配置 — 通过 Netlify Identity + GitHub OAuth
-# 设置步骤见 README.md
-
+# Decap CMS 配置 — GitHub OAuth
 backend:
-  name: git-gateway
+  name: github
   repo: asdjklqwe123/asdjklqwe123.github.io
   branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
-# Netlify Identity 网关站点（仅用于认证，不影响网站托管）
-# 在 Netlify 创建站点后，将下面的 site_url 改为你的 Netlify 站点 URL
-site_url: https://chenlmj.netlify.app
+site_url: https://asdjklqwe123.github.io
 
 media_folder: "public/images"
 public_folder: "/images"

@@ -6,20 +6,6 @@
   <title>内容管理 - asdjklqwe123's Blog</title>
 </head>
 <body>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", function(user) {
-        if (!user) {
-          window.netlifyIdentity.open("login");
-        }
-      });
-      window.netlifyIdentity.on("login", function() {
-        document.location.href = "/admin/";
-      });
-      window.netlifyIdentity.init();
-    }
-  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
