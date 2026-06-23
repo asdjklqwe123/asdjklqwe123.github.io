@@ -1,4 +1,4 @@
-# Decap CMS 配置 — Vercel OAuth
+﻿# Decap CMS — Vercel OAuth
 backend:
   name: github
   repo: asdjklqwe123/asdjklqwe123.github.io
@@ -7,43 +7,24 @@ backend:
   auth_endpoint: /api/auth
 
 site_url: https://asdjklqwe123.github.io
-
-media_folder: "public/images"
-public_folder: "/images"
-
-locale: "zh_CN"
-display_url: "https://asdjklqwe123.github.io"
-logo_url: "https://asdjklqwe123.github.io/favicon.svg"
+media_folder: public/images
+public_folder: /images
+locale: zh_CN
+display_url: https://asdjklqwe123.github.io
+logo_url: https://asdjklqwe123.github.io/favicon.svg
 
 collections:
-  - name: "blog"
-    label: "博客文章"
-    label_singular: "文章"
-    folder: "src/content/blog"
+  - name: blog
+    label: 博客文章
+    label_singular: 文章
+    folder: src/content/blog
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
-      - { label: "标题", name: "title", widget: "string" }
-      - { label: "描述", name: "description", widget: "text" }
-      - { label: "分类", name: "category", widget: "select", options: ["course", "algorithm", "ml", "other"], required: false }
-      - { label: "发布日期", name: "publishDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "标签", name: "tags", widget: "list", required: false }
-      - { label: "草稿", name: "draft", widget: "boolean", default: false, required: false }
-      - { label: "正文", name: "body", widget: "markdown" }
-logo_url: "https://asdjklqwe123.github.io/favicon.svg"
-
-collections:
-  - name: "blog"
-    label: "博客文章"
-    label_singular: "文章"
-    folder: "src/content/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "标题", name: "title", widget: "string" }
-      - { label: "描述", name: "description", widget: "text" }
-      - { label: "分类", name: "category", widget: "select", options: ["course", "algorithm", "ml", "other"], required: false }
-      - { label: "发布日期", name: "publishDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "标签", name: "tags", widget: "list", required: false }
-      - { label: "草稿", name: "draft", widget: "boolean", default: false, required: false }
-      - { label: "正文", name: "body", widget: "markdown" }
+      - { label: 标题, name: title, widget: string }
+      - { label: 描述, name: description, widget: text }
+      - { label: 分类, name: category, widget: select, options: [course, algorithm, ml, other], required: false }
+      - { label: 发布日期, name: publishDate, widget: datetime, format: YYYY-MM-DD, date_format: YYYY-MM-DD, time_format: false }
+      - { label: 标签, name: tags, widget: list, required: false }
+      - { label: 草稿, name: draft, widget: boolean, default: false }
+      - { label: 正文, name: body, widget: markdown }
