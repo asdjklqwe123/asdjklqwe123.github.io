@@ -1,13 +1,12 @@
-# Decap CMS — Netlify OAuth
+# Decap CMS — 自定义 OAuth (Netlify Function)
 backend:
   name: github
   repo: asdjklqwe123/asdjklqwe123.github.io
   branch: main
   publish_mode: simple
   scope: repo,user
-  base_url: https://api.netlify.com
-  auth_endpoint: auth
-  site_domain: chenlmj128.netlify.app
+  base_url: https://chenlmj128.netlify.app
+  auth_endpoint: .netlify/functions/auth
 
 site_url: https://asdjklqwe123.github.io
 media_folder: public/images

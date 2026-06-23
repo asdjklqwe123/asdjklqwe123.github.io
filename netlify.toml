@@ -1,14 +1,10 @@
-# Netlify 配置文件 — 用于 OAuth 认证服务
-# 你需要先在 Netlify 上创建一个站点，然后将此文件推送到 GitHub
-# Netlify 会自动检测并部署
+# Netlify 配置 — OAuth 认证函数
+# 博客托管在 GitHub Pages，Netlify 仅用于运行 OAuth 回调函数
 
 [build]
-  command = "npm run build"
-  publish = "dist"
+  command = "echo 'OAuth function only'"
+  publish = "."
 
-# 将 GitHub Pages 站点域名加入 Netlify 的允许列表
-# 这样 asdjklqwe123.github.io/admin/ 才能正常使用 Netlify OAuth
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "https://asdjklqwe123.github.io"
+[functions]
+  node_bundler = "esbuild"
+  directory = "netlify/functions"
