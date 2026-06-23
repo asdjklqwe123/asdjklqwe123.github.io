@@ -4,6 +4,7 @@ backend:
   repo: asdjklqwe123/asdjklqwe123.github.io
   branch: main
   publish_mode: simple
+  scope: repo,user
   base_url: https://api.netlify.com
   auth_endpoint: auth
   site_domain: chenlmj128.netlify.app
