@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>汇编 - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>汇编</h1> <div class="article-meta"> <time datetime="2025-11-30T00:00:00.000Z"> 2025年11月30日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <h2 id=""></h2>
+<h3 id="寻址方法">寻址方法</h3>
+<p>一般说的有效地址为内存中的地址</p>
+<ol>
+<li>
+<p>立即数寻址：无有效地址，操作数在指令中</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AX, 637DH ; 将立即数 637DH 加载到 AX 寄存器中</span></span>
+<span class="line"><span>ADD SI, 0100H ; 将立即数 0100H 加到 SI 寄存器中</span></span></code></pre>
+</li>
+<li>
+<p>直接寻址：有效地址 EA = 偏移量 D = 7237H</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AX, [7237H] ; 将内存地址 7237H 处的内容加载到 AX 寄存器中</span></span>
+<span class="line"><span>ADD SI, [7237H] ; 将内存地址 7237H 处的内容加到 SI 寄存器中</span></span></code></pre>
+<p>直接寻址必须强制指明段寄存器，哪怕就是默认的DS</p>
+</li>
+<li>
+<p>寄存器寻址：EA 不适用，操作数在寄存器中</p>
+<ul>
+<li>任何操作数不能是IP、FLAGS，目的操作数不能是CS。</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AX, BX ; 将 BX 寄存器的内容加载到 AX 寄存器中</span></span>
+<span class="line"><span>ADD SI, BX ; 将 BX 寄存器的内容加到 SI 寄存器中</span></span></code></pre>
+</li>
+<li>
+<p>寄存器间接寻址：EA = (寄存器)</p>
+<ul>
+<li>该寄存器必须是BX、SI、DI、BP中的一个，其它寄存器不可以。</li>
+<li>如果寄存器是BX、SI、DI，默认的段寄存器是DS。</li>
+<li>如果寄存器是BP，默认的段寄存器是SS。</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AX, [BX] ; 将 BX 寄存器指向的内存地址处的内容加载到 AX 寄存器中</span></span>
+<span class="line"><span>ADD SI, [BX] ; 将 BX 寄存器指向的内存地址处的内容加到 SI 寄存器中</span></span></code></pre>
+</li>
+<li>
+<p>寄存器相对寻址：EA = (寄存器) + D</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AL, [BX-45H] ; 将 BX 寄存器的内容减去 45H 后指向的内存地址处的内容加载到 AL 寄存器中</span></span>
+<span class="line"><span>ADD [SI+1050H], 0102H ; 将 SI 寄存器的内容加上 1050H 后指向的内存地址处的内容加上 0102H</span></span></code></pre>
+</li>
+<li>
+<p>基址变址寻址：EA = (寄存器1) + (寄存器2)</p>
+<ul>
+<li>间接寻址的寄存器限制在此仍然适用，基址寄存器只要是 BP，那么默认的段寄存器就是SS，否则是DS。还要额外施加限制：两个寄存器必须分别是基址寄存器（BP或BX）和变址寄存器（SI和DI）。</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AX, [BX + SI] ; 将 BX 寄存器和 SI 寄存器的内容相加后指向的内存地址处的内容加载到 AX 寄存器中</span></span>
+<span class="line"><span>ADD SI, [BX + SI] ; 将 BX 寄存器和 SI 寄存器的内容相加后指向的内存地址处的内容加到 SI 寄存器中</span></span></code></pre>
+</li>
+<li>
+<p>相对基址变址寻址：EA = (寄存器1) + (寄存器2) + D</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV AL, [BX+SI-45H] ; 将 BX 和 SI 的内容相加后减去 45H 指向的内存地址处的内容加载到 AL 寄存器中</span></span>
+<span class="line"><span>ADD [BP+DI+1050H], 0102H ; 将 BX 和 SI 的内容相加再加上 1050H 后指向的内存地址处的内容加上 0102H</span></span></code></pre>
+</li>
+</ol>
+<h3 id="ppt第4讲">PPT第4讲</h3>
+<p><strong>汇编指令</strong>
+无法编码两个存储器，因此存储器操作数只能出现一个，要么是源，要么是目的。</p>
+<p>PTR : 仅限目标操作数为存储器，且位宽无法从其它操作数推断出来的情况。</p>
+<h4 id="数据传送指令">数据传送指令</h4>
+<p><strong>MOV</strong>
+<code>MOV target, source</code> 将 source 的内容复制到 target 中
+target : 寄存器、存储器、段寄存器
+source : 寄存器、存储器、段寄存器、立即数</p>
+<ul>
+<li>无法移动立即数到段寄存器</li>
+<li>无存储器到存储器的操作类型</li>
+<li>无段寄存器到段存储器的操作类型</li>
+<li>target 和 sourse 数据类型需要匹配</li>
+</ul>
+<p><strong>PUSH</strong>
+<code>PUSH source</code> 将 source 的内容压入堆栈
+source : 仅接受字操作，不可以使用 IP、FLAGS</p>
+<p><strong>POP</strong>
+<code>POP target</code> 将堆栈顶的内容弹出到 target 中
+target : 仅接受字操作，不可以使用 CS、IP、FLAGS</p>
+<p><strong>XCHG</strong>
+<code>XCHG target, source</code> 将 target 和 source 的内容交换
+target : 寄存器、存储器
+source : 寄存器、存储器
+交换的两个寄存器的字长必须一样
+LOCK XCHG : 上自旋锁</p>
+<p><strong>XLAT</strong> 不要求
+AL &#x3C;= DS:[BX + AL]</p>
+<p><strong>LEA</strong>
+加载有效地址
+<code>LEA target, source</code> 将 source 的有效地址加载到 target 中
+例子：<code>LEA SI, [BP + SI + 8241H]</code>
+target : reg16
+source : [mem] 和 MOV 不同，reg 会变成 mem（地址）</p>
+<p><strong>LDS</strong> 不要求？</p>
+<p><strong>LES</strong> 不要求？</p>
+<p><strong>PUSHF</strong>
+<strong>POPF</strong>
+<strong>LAHF</strong></p>
+<p><strong>IN 和 OUT</strong>
+PPT第9讲需要用</p>
+<p>8.3 写出指令将一个字节数据输出到端口 25H。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>OUT 25H,AL</span></span></code></pre>
+<p>8.4 写出指令将一个字数据从端口 1000H 输入。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>MOV DX,1000H</span></span>
+<span class="line"><span>IN AX DX</span></span></code></pre>
+<h4 id="算术运算">算术运算</h4>
+<h5 id="加法操作">加法操作</h5>
+<p><strong>ADD</strong>
+<strong>INC</strong> 自增 目的 &#x3C;- 目的 + 1
+<strong>AAA</strong> 将 BCD 加法得到的 16 进制数调整为 BCD 码 （每字节含 1 位 10 进制数）
+<strong>DAA</strong> 同上（每字节含 2 位 10 进制数）</p>
+<h5 id="减法操作">减法操作</h5>
+<p><strong>SUB</strong>
+<strong>SBB</strong> 带借位减法
+<strong>NEG</strong> 求相反数
+<strong>CMP</strong> 比较 临时 = 源1 - 源2
+和 SUB 实现一样，导致 源1 不能为 立即数
+<strong>AAS</strong></p>
+<h5 id="乘法操作">乘法操作</h5>
+<p><strong>MUL</strong> 无符号乘法
+<code>MUL sourse</code>
+target : AX &#x3C;— AX(源不是 8 位) * sourse  AX &#x3C;— AL(源是 8 位) * sourse
+sourse ：无法使用立即数</p>
+<p><strong>IMUL</strong> 有符号乘法
+<strong>AAM</strong> 乘后字符调整</p>
+<h3 id="循环">循环</h3>
+<p>do-while 比 while 更优秀：while 有无条件跳转，每次循环都有一个无条件跳转
+它们都有条件判断和条件跳转，差距不大</p>
+<p>常规强度折减
+循环强度折减
+PPT第8讲小测</p>
+<h3 id="过程和宏">过程和宏</h3>
+<h1 id="ppt第9讲">PPT第9讲</h1>
+<h1 id="ppt10输入输出设计">PPT10输入输出设计</h1>
+<p>4种输入输出形式</p>
+<ol>
+<li>直接输入输出</li>
+<li>轮询</li>
+<li>中断</li>
+<li>成组</li>
+</ol>
+<p>内联汇编</p>
+<p>关键词：
+ADC</p>
+<p>注意：
+OUT 只能带AX或AL</p>
+<h1 id="ppt第10讲">PPT第10讲</h1>
+<ul>
+<li><strong>中断号</strong>：决定了<strong>向谁请求服务</strong>
+<ul>
+<li><code>INT 10H</code>, <code>13H</code>, <code>14H</code>, <code>16H</code> → <strong>BIOS服务</strong>（底层硬件）</li>
+<li><code>INT 21H</code> → <strong>DOS服务</strong>（操作系统）</li>
+<li><code>INT 33H</code> → 鼠标服务</li>
+</ul>
+</li>
+<li><strong>功能号</strong>：决定了<strong>请求什么具体的服务</strong>
+<ul>
+<li>放在 <code>AH</code> 寄存器中</li>
+<li><strong>相同的功能号在不同中断下含义完全不同</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="ppt12内嵌汇编">PPT12内嵌汇编</h1>
+<p>例：<code>MOV EDX,DWORD PTR[RAX]</code>
+RAX : 64位，只有 AMD64 中有
+平时 <code>AX</code> 不能放入 [] 中，寄存器相对寻址只有 2B2I 寄存器</p>
+<p>向量指令
+SIMD指令（向量指令阉割版）</p>
+<h2 id="复习ppt">复习PPT</h2>
+<p>汇编语言是什么东西（这节课学了什么（包括操作系统考试））</p>
+<p>5个器：把什么干什么是什么器</p>
+<p>8个寄存器，鼓励什么用途</p>
+<p>OF SF ZF CF IF
+很有可能问：溢出符号标准</p>
+<p>4个段寄存器拿来干什么
+随机用不同称呼</p>
+<p>指令的6个分类</p>
+<p>寻址
+按3大类功能分类，
+几大方法分类</p>
+<p>段寄存器使用</p>
+<p>不考100Hbug</p>
+<p>JMP [BX] 重点掌握[]</p>
+<p>MOV 注意点，不能把什么放入什么</p>
+<p>乘法寄存器使用
+除法溢出条件</p>
+<p>字符串移动0和1</p>
+<p>Call CS和IP哪个在前在后</p>
+<p>汇编末尾加 END START</p>
+<p>汇编语言：不满足则跳过</p>
+<p>程序写对能得分 不考虑性能</p>
+<p>什么是尾声什么是序言</p>
+<p>内涵标号的宏需要会写 （八左右）</p>
+<p>汇编语言中断写法</p>
+<p>中断和过程的区别</p>
+<p>DMA不考编程考4种传输方式</p>
+<p>按键类型，是什么按键，还有什么请举例
+扫描码是什么意思，
+工作流程</p>
+<p>系统调用
+！退出程序 4CH 21H
+读写 09H 0AH</p>
+<p>模拟缓冲区怎么写</p>
+<h2 id="复习">复习</h2>
+<ol>
+<li>2.17 CS、DS、SS、ES</li>
+<li>3.25 大多数指令的存储器寻址隐含了 DS 段寄存器 段跨越前缀可修改</li>
+<li>编程题目 1 格式分</li>
+<li>一般（8086）使用递减满栈</li>
+<li>CS:IP双字
+CS为高位，IP为低位
+x86栈向低地址生长
+ret      ; 总是先 pop IP
+retf     ; 总是先 pop IP，再 pop CS<br>
+iret     ; 总是先 pop IP，再 pop CS，再 pop FLAGS<br>
+所以先 push CS再 push IP</li>
+</ol> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>git learn - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>git learn</h1> <div class="article-meta"> <time datetime="2026-03-27T00:00:00.000Z"> 2026年3月27日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <h2 id="已有进度">已有进度</h2>
+<h3 id="1部分命令">1.部分命令：</h3>
+<ol>
+<li><code>git branch</code>:     查看本地分支，前面有“*”号的代表当前分支</li>
+<li><code>git branch -vv</code>: 查看本地分支和远程分支关联情况</li>
+<li><code>git branch -a</code>:  查看本地和远程所有分支</li>
+<li><code>git remote</code>:     查看远程仓库</li>
+<li><code>git remote -v</code>:     查看远程仓库地址</li>
+<li><code>git merge {分支名}</code>:合并不同分支</li>
+<li><code>git gc</code>:         “垃圾回收”(git会自己找机会做)</li>
+<li><code>git pull</code>:       从远程获取更新并尝试将其合并到你当前的本地分支。(本身是fetch和merge结合)</li>
+<li><code>git branch -m 新名字</code>:重命名当前本地分支</li>
+</ol>
+<h3 id="2提交仓库工作流程">2.提交仓库工作流程</h3>
+<ol>
+<li>修改文件：你在本地修改了文件。</li>
+<li>暂存更改：使用 <code>git add 文件名</code> 将更改添加到暂存区。</li>
+<li>提交更改：使用 <code>git commit -m "提交信息"</code> 将暂存区的更改提交到本地仓库。</li>
+<li>推送更改：使用 <code>git push</code> 将本地的提交推送到远程仓库。</li>
+</ol>
+<h2 id="目标">目标</h2>
+<h3 id="1问题大赏">1.问题大赏</h3>
+<p>目的：
+问题：出现 (END)
+输入：按q</p>
+<h3 id="2使用git命令将分支推到远程">2.使用git命令将分支推到远程</h3>
+<h4 id="1工作流程">1.工作流程</h4>
+<ol>
+<li>修改文件：你在本地修改了文件。</li>
+<li>暂存更改：使用 <code>git add 文件名</code> 将更改添加到暂存区。</li>
+<li>提交更改：使用 <code>git commit -m "提交信息"</code> 将暂存区的更改提交到本地仓库。</li>
+<li>推送更改：使用 <code>git push</code> 将本地的提交推送到远程仓库。</li>
+</ol>
+<h4 id="2无法切分支">2.无法切分支</h4>
+<p>原因：由于本地有未提交的更改，Git 不允许你执行 checkout 操作，以避免覆盖这些更改</p>
+<ul>
+<li><strong>提交新分支</strong>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> git学习/git_learn.md</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> commit</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> "保存更改"</span></span></code></pre>
+</li>
+<li><strong>暂存更改</strong>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> stash</span></span></code></pre>
+</li>
+</ul>
+<p>如果你想在切换到 <code>test</code> 分支后恢复之前的更改，可以运行：
+<code>bash     git stash pop     </code></p>
+<ul>
+<li><strong>丢弃更改</strong>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> checkout</span><span style="color:#79B8FF"> --</span><span style="color:#9ECBFF"> git学习/git_learn.md</span></span></code></pre>
+</li>
+</ul>
+<h4 id="3将远程分支拉到本地分支">3.将远程分支拉到本地分支</h4>
+<p>如果不在目标分支上，可以使用 <code>git checkout</code> 命令切换到该分支：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git checkout your-local-branch</span></span></code></pre>
+<p>从远程分支拉取最新的更改到当前本地分支:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git pull origin remote-branch</span></span></code></pre>
+<h4 id="4将本地分支提交到新的分支">4.将本地分支提交到新的分支</h4>
+<p>希望改完分支后提交到新分支</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git push origin feature-branch:origin-feature-branch</span></span></code></pre>
+<p>这里的 origin 是远程仓库的名称（通常是默认名称），冒号前面的 feature-branch 是本地分支的名称，冒号后面的 feature-branch 是你希望在远程创建的分支名称。如果远程分支不存在，Git 会自动创建它。
+如果希望将本地分支与远程分支建立跟踪关系，以便以后可以使用 <code>git pull</code> 和 <code>git push</code> 命令而无需指定远程分支，可以使用 -u 选项：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> push</span><span style="color:#79B8FF"> -u</span><span style="color:#9ECBFF"> origin</span><span style="color:#9ECBFF"> feature-branch:origin-feature-branch</span></span></code></pre>
+<h4 id="5更改上游分支如果需要">5.更改上游分支（如果需要）</h4>
+<p>如果希望更改当前本地分支关联的远程分支，可以使用以下命令：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> branch</span><span style="color:#79B8FF"> --set-upstream-to=origin/new-remote-branch</span><span style="color:#9ECBFF"> my_branch</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">可省略my_branch</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>这会将当前本地分支的上游分支更改为 origin/new-remote-branch。前提是这个远程分支存在。否则需要用到</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git push -u origin feature-branch:origin-new-remote-branch</span></span></code></pre>
+<h3 id="3git文件gitignore">3.git文件：.gitignore</h3>
+<p>.gitignore 文件是一个纯文本文件，包含了项目中所有指定的文件和文件夹的列表，这些文件和文件夹是 Git 应该忽略和不追踪的。</p>
+<h4 id="相关语法">相关语法</h4>
+<p>详细查看.gitignore</p>
+<h4 id="处理已经追踪的文件">处理已经追踪的文件</h4>
+<p>如果远程仓库中已经有了部分想忽略的文件的解决办法：</p>
+<ol>
+<li>更新 <code>.gitignore</code>：确保你已经在 <code>.gitignore</code> 文件中添加了希望忽略的文件或文件夹的路径。</li>
+<li>解除追踪文件：
+使用命令来解除对这些文件的追踪，但保留本地文件。例如，如果想要去掉 <code>example.txt</code>文件或<code>text</code>文件夹，可以运行：
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> rm</span><span style="color:#79B8FF"> --cached</span><span style="color:#9ECBFF"> example.txt</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> rm</span><span style="color:#79B8FF"> -r</span><span style="color:#79B8FF"> --cached</span><span style="color:#9ECBFF"> text/</span></span></code></pre>
+</li>
+<li>提交更改和推送更改到远程仓库</li>
+</ol>
+<hr>
+<h3 id="把写错的代码回退到之前状态">把写错的代码回退到之前状态</h3>
+<ol>
+<li>先看当前状态（避免误操作）</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git status</span></span>
+<span class="line"><span>git log --oneline -n 5</span></span></code></pre>
+<ol start="2">
+<li>还没 git add（只改了工作区）</li>
+</ol>
+<ul>
+<li>撤销某个文件改动：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git restore 路径/文件名</span></span></code></pre>
+<ul>
+<li>撤销全部改动：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git restore .</span></span></code></pre>
+<ol start="3">
+<li>已经 git add 了，但还没 commit</li>
+</ol>
+<ul>
+<li>先取消暂存，再撤销改动：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git restore --staged 路径/文件名</span></span>
+<span class="line"><span>git restore 路径/文件名</span></span></code></pre>
+<ul>
+<li>全部取消暂存：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git restore --staged .</span></span></code></pre>
+<ol start="4">
+<li>已经 commit 了，但还没 push</li>
+</ol>
+<ul>
+<li>保留代码改动，只撤销提交（最安全）：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git reset --soft HEAD~1</span></span></code></pre>
+<ul>
+<li>撤销提交并把改动放回未暂存：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git reset --mixed HEAD~1</span></span></code></pre>
+<ul>
+<li>连代码一起彻底回退（危险）：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git reset --hard HEAD~1</span></span></code></pre>
+<ol start="5">
+<li>已经 push 到远程了（协作分支推荐）</li>
+</ol>
+<ul>
+<li>用反向提交，不改历史：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git revert 提交哈希</span></span>
+<span class="line"><span>git push</span></span></code></pre>
+<p>安全建议（强烈推荐）</p>
+<ul>
+<li>回退前先建一个备份分支：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>git branch backup-before-rollback</span></span></code></pre>
+<ul>
+<li>不确定时优先用 revert 或 soft reset，不要先用 hard reset。</li>
+</ul>
+<hr>
+<h3 id="ci">CI</h3>
+<h4 id="yaml">YAML</h4>
+<p><a href="https://learnxinyminutes.com/zh-cn/yaml/">Learn YAML in Y Minutes</a></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">Upload test results (junit) if any</span></span>
+<span class="line"><span style="color:#85E89D">        if</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">always()</span></span></code></pre>
+<ol>
+<li>
+<p>YAML 只能用<strong>空格</strong>进行缩进</p>
+</li>
+<li>
+<p>YAML 的两种基本结构</p>
+<ul>
+<li>序列（sequence / list）：用 - 开头表示一个列表元素。</li>
+<li>映射（mapping / dict）：用 key: value 的形式表示键值对。</li>
+</ul>
+</li>
+<li>
+<p>这段代码的语法含义</p>
+<ul>
+<li>这行 <code>- name: Upload test results (junit) if any</code> 中的 <code>-</code> 表示“这是 steps（或其它上级字段）中的一个列表项”。</li>
+<li>同一个列表项可以包含多个键（mapping 条目），后续缩进的行（例如 <code>if: always()</code>）就是属于这个列表项的键 — 所以不需要再写 <code>-</code>。</li>
+<li>换言之：<code>-</code> 开始一个元素，后面缩进的无 <code>-</code> 的行是该元素内部的字段（属性）。</li>
+</ul>
+</li>
+</ol>
+<h4 id="顶层映射">顶层映射</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>name: CI</span></span>
+<span class="line"><span>on: push         # 触发器（事件）</span></span>
+<span class="line"><span>jobs:            # jobs 是一个映射，包含若干 job</span></span>
+<span class="line"><span>  test:          # job id = "test"</span></span>
+<span class="line"><span>    runs-on: ubuntu-latest</span></span>
+<span class="line"><span>    strategy:</span></span>
+<span class="line"><span>      matrix:</span></span>
+<span class="line"><span>        node-version: [18.x, 20.x]</span></span>
+<span class="line"><span>    steps:       # steps 是序列（list）</span></span>
+<span class="line"><span>      - uses: actions/checkout@v4   # step 1（以 - 开头）</span></span>
+<span class="line"><span>      - name: Run tests             # step 2（映射内有 name/run/if 等字段）</span></span>
+<span class="line"><span>        run: npm test</span></span>
+<span class="line"><span></span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#6A737D"># 序列 (sequences，等价于列表 list 或数组 array ) 看起来像这样：</span></span>
+<span class="line"><span style="color:#6A737D"># 注意 '-' 也算缩进：</span></span>
+<span class="line"><span style="color:#85E89D">a_sequence</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">Item 1</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">Item 2</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#79B8FF">0.5</span><span style="color:#6A737D"> # 序列可以包含不同类型。</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">Item 4</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#85E89D">key</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">value</span></span>
+<span class="line"><span style="color:#85E89D">    another_key</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">another_value</span></span>
+<span class="line"><span style="color:#E1E4E8">  -</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">This is a sequence</span></span>
+<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">inside another sequence</span></span>
+<span class="line"><span style="color:#E1E4E8">  - - - </span><span style="color:#9ECBFF">Nested sequence indicators</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">can be collapsed</span></span>
+<span class="line"><span style="color:#6A737D"># 等价于</span></span>
+<span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#9ECBFF">  "a_sequence"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">    "Item 1"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "Item 2"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    0.5</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    "Item 4"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#9ECBFF">      "key"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"value"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">      "another_key"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"another_value"</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span></span>
+<span class="line"><span style="color:#9ECBFF">      "This is a sequence"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">      "inside another sequence"</span></span>
+<span class="line"><span style="color:#E1E4E8">    ],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span></span>
+<span class="line"><span style="color:#E1E4E8">      [</span></span>
+<span class="line"><span style="color:#9ECBFF">        "Nested sequence indicators"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        "can be collapsed"</span></span>
+<span class="line"><span style="color:#E1E4E8">      ]</span></span>
+<span class="line"><span style="color:#E1E4E8">    ]</span></span>
+<span class="line"><span style="color:#E1E4E8">  ]</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

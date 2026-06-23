@@ -1,0 +1,487 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>操作系统复习 - asdjklqwe123&#39;s Blog</title><meta name="description" content="操作系统核心知识点：中断机制、CPU特权级、程序结构与内存管理"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>操作系统复习</h1> <div class="article-meta"> <time datetime="2025-12-18T00:00:00.000Z"> 2025年12月18日 </time>   &middot; asdjklqwe123 </div> <div class="tags" style="margin-bottom:24px;"> <span class="tag">操作系统</span> </div> <div class="article-content"> <p>系统就是抽象、协调和权衡。计算机操作系统建立起对资源的分层抽象，并通过权衡利弊，统筹、协调和管理资源来达到最大化计算机针对特定用途的效用。</p>
+<hr>
+<h2 id="设备与中断">设备与中断</h2>
+<p>前瞻</p>
+<ol>
+<li>ISR 是什么</li>
+<li>CPU 怎么处理中断，流程是什么，IP 变化是什么</li>
+<li>中断有哪些种类</li>
+<li>为何要给 INT3 分配特殊的单字节编码?</li>
+</ol>
+<p><strong>PPT2</strong></p>
+<ul>
+<li>
+<p>中断服务程序	ISR</p>
+<ul>
+<li>由CPU在响应中断时，自动调用的一段对应于中断号的特殊过程。</li>
+</ul>
+</li>
+<li>
+<p>当中断来临时，CPU<strong>执行完</strong>当前正在执行的指令，就跳转去ISR，且IRET返回时返回到<strong>下一条指令处</strong>。</p>
+<ul>
+<li>特例1：REP字符串指令，拷贝完一次后就跳转，回来接着拷贝</li>
+<li>特例2：如果中断是一个异常，则IRET返回到指令本身<strong>再次尝试执行</strong></li>
+<li>特例3：<strong>STI、IRET指令以及操作段寄存器的指令</strong>会导致执行完本指令之后再执行指令才响应中断。</li>
+</ul>
+</li>
+<li>
+<p>外部中断</p>
+</li>
+<li>
+<p>异常</p>
+<ul>
+<li>当程序中的指令执行发生错误，就会抛出异常，异常会被同步捕获</li>
+<li>会被同步捕获（和通常的中断与CPU异步不同）</li>
+</ul>
+</li>
+<li>
+<p>陷阱</p>
+<ul>
+<li>将断点位置换成INT 3</li>
+<li>系统调用是陷阱的一种特殊情况</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="处理器特权级">处理器特权级</h2>
+<p><strong>硬件特权级</strong>	CPU硬件实现，分为用户模式（用户态）和内核模式（内核态）。</p>
+<p><strong>用户模式</strong>	执行应用程序的模式，不允许直接访问系统的敏感资源。
+<strong>内核模式</strong>	执行操作系统的模式，可直接执行敏感指令（<strong>特权指令？</strong>）和访问敏感资源。</p>
+<p><strong>特权指令</strong>	能对系统中敏感资源进行操作的指令，仅能在内核模式下执行。</p>
+<p>特权级的切换：</p>
+<ul>
+<li>方法一：中断机制</li>
+<li>方法二：专用指令机制
+用户程序使用什么方法调用操作系统：</li>
+<li>使用上述两种机制之一。</li>
+<li>之后陷入操作系统内核，执行被操作系统接管。</li>
+</ul>
+<hr>
+<h2 id="简单程序的结构-ppt31">简单程序的结构 PPT3.1</h2>
+<p><strong>前瞻</strong></p>
+<ol>
+<li>运行时视图是什么</li>
+<li>程序有哪些段，分别是什么，有什么用</li>
+<li>程序在外存中是怎么存储的</li>
+<li>操作系统如何将程序从外存搬到 RAM 中</li>
+</ol>
+<p><strong>运行时视图</strong></p>
+<ul>
+<li>程序在<strong>执行时</strong>的主存储器布局。也叫运行时布局
+<strong>代码段</strong></li>
+<li>存放程序的可执行指令，所有的执行都在代码段发生。
+<strong>数据段</strong></li>
+<li>存放程序的数据</li>
+<li>只读数据段：存放程序的含初值常量，程序运行时不可修改</li>
+<li>读写数据段：存放程序的含初值常量，程序运行时可修改</li>
+<li>零初始化数据段：存放程序的不含初值可修改常量
+<strong>堆段</strong></li>
+<li>存放程序的堆，也即动态分配内存时内存的来源。
+<strong>栈段</strong></li>
+<li>存放程序的运行栈，以供过程调用时保存和恢复上下文。</li>
+</ul>
+<h3 id="程序的装入"><strong>程序的装入</strong></h3>
+<p>操作系统读取外存上的可执行文件中对程序<strong>逻辑布局</strong>的描述（Description），在内存中生成程序的<strong>物理布局</strong>的一个实例（Instance）的过程。
+（通常对栈段不做处理）</p>
+<h3 id="程序的生成"><strong>程序的生成</strong></h3>
+<p><strong>链接器</strong>的两个方法：</p>
+<ol>
+<li>直接回填法：
+<ol>
+<li>链接器生成所有符号的地址后，直接修改 .text 段中对这些符号的引用，将正确的地址填写到那些引用中去，这样生成的代码就可以访问那些符号了。</li>
+<li><strong>会修改.text段</strong>。！！</li>
+</ol>
+</li>
+<li>间接地址法：
+<ol>
+<li>编译器或汇编器生成目标文件时，在.rwdata段留出一个表格，.text段中的代码对其它符号的引用均通过这个表格进行。</li>
+<li><strong>不会修改.text段，但会修改.rwdata段。</strong></li>
+</ol>
+</li>
+</ol>
+<p><strong>调用约定</strong>：</p>
+<ul>
+<li><strong>传值约定</strong>与<strong>保存约定</strong>合起来称为调用约定。</li>
+<li>传参约定：3种</li>
+<li>保存约定：
+<ul>
+<li>寄存器保存约定：
+<ul>
+<li>调用者负责
+<ul>
+<li>优点：可以少保护寄存器。</li>
+<li>缺点：需要明确知道被调用者会触碰哪些寄存器，以及自己的哪些寄存器里面有有效数据，才能针对性地生成最小的保护列表。对人而言不那么容易，而且保护列表要反复写，增加代码量。</li>
+</ul>
+</li>
+<li>被调用者负责
+<ul>
+<li>优点：容易做到权责一致、做到模块化，且保护列表只用写一次。</li>
+<li>缺点：产生大量不必要的PUSH和POP，拖慢程序执行速度</li>
+</ul>
+</li>
+<li>混合制负责
+<ul>
+<li>缺点：约定复杂，写程序时要准确记得哪些寄存器是谁负责保存，一旦弄错后果就很严重。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>栈框恢复约定
+<ul>
+<li>调用者负责
+<ul>
+<li>我们总是先保存SP到BP，然后结束调用后将BP赋给SP。</li>
+</ul>
+</li>
+<li>调用者负责、被调用者负责、混合制负责</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>过程执行的全景</strong>（STDCALL）</p>
+<ol>
+<li>
+<p>序言	Prologue：</p>
+<ul>
+<li>真正的运算操作开始之前所做的准备工作</li>
+<li>CALL指令、保存寄存器、读取参数、初始化局部变量</li>
+</ul>
+</li>
+<li>
+<p>尾声	Epilogue：</p>
+<ul>
+<li>真正的运算操作结束之后所做的收尾工作，</li>
+<li>恢复寄存器、调整栈框、RET指令</li>
+</ul>
+</li>
+<li>
+<p>开销：序言和尾声之和。</p>
+</li>
+</ol>
+<hr>
+<h2 id="复杂程序的结构-ppt32">复杂程序的结构 PPT3.2</h2>
+<p>前瞻：</p>
+<ol>
+<li>运行时环境在哪个模式执行</li>
+<li>多程序地址空间冲突怎么解决</li>
+<li>静态链接库和动态链接库的区别</li>
+</ol>
+<p><strong>运行时环境</strong>：运行在用户态，它们也会使用系统调用。
+<strong>静态链接库</strong>	*.OBJ文件的简单合集。
+<strong>部分链接</strong>
+1. 一种静态链接库技术
+2. 将静态链接库中的*.OBJ进行预链接，并	且除去（或混淆）所有的内部引用符号。
+3. 符号除去：
+1. 将所有的库代码编译成一整个二进制映像，
+2. 其中代码和数据都使用 <strong>位置无关方式</strong>，
+3. 并且除去内部符号
+4. 符号混淆：将所有的内部符号以及对其的引用全部修改为无意义的随机字符串。</p>
+<p><strong>多道程序共存</strong></p>
+<ol>
+<li>简单分区
+<ul>
+<li>将物理内存切割成几个块，一个块运行一个应用程序，或者放置一个应用程序的某个段。</li>
+<li>各个应用程序的各个段在链接时就决定好要放置在什么地方。</li>
+<li>优点：
+<ul>
+<li>配置简单：不需要额外的硬件就可以实现</li>
+<li>权限控制简单：针对每一次内存访问进行合法性检查，就可以防止访问越界</li>
+</ul>
+</li>
+<li><strong>内存保护单元</strong>
+<ol>
+<li>常用于简单分区布局的存储器权限控制工具。内存保护单元使 Memory 用一个内存保护表，表中每一项都包括 <strong>区间范围</strong> 和 <strong>区间权限</strong> 一对信息。由应用程序发起的每一次内存访问都需要经过内存 Unit 保护表指定的权限检查：
+<ol>
+<li>访问的地址必须落在某分区的地址范围之中。</li>
+<li>发起的访问的性质（读，写，执行）必须是该分区的权限允许的。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>虚拟地址空间
+<ol>
+<li><strong>内存管理单元</strong>：一种能依照某种规则将对<strong>逻辑地址</strong>的访问<strong>转换</strong>成对对应的<strong>物理地址</strong>访问的硬件。MMU</li>
+</ol>
+</li>
+<li>分段：按段划分虚拟地址
+<ul>
+<li>段式内存管理单元 S-MMU</li>
+</ul>
+</li>
+<li>分页：按页划分虚拟地址
+<ul>
+<li>页式内存管理单元 P-MMU</li>
+</ul>
+</li>
+</ol>
+<p><strong>静态链接库问题</strong>：</p>
+<ol>
+<li><strong>重复存储</strong>：库会被在每一个可执行文件中保留一个副本，浪费磁盘。</li>
+<li><strong>更新困难</strong>：每次更新库之后，都需要把用到它的可执行文件重新链接。</li>
+<li><strong>重复加载</strong>：库会被在每一个虚拟地址空间中保留一个副本，进而导致在物理地址空间中也产生重复的副本，浪费内存，也浪费载入时间。</li>
+</ol>
+<p><strong>动态链接库</strong></p>
+<ul>
+<li>在可执行程序被加载时，作为独立文件单独加载的库文件。<strong>它不包含在可执行文件之内</strong>；可执行文件将在需要它们的时候加载它们。</li>
+<li><strong>动态库重定位</strong>：
+<ul>
+<li>不管这个库重定位到哪里，多个应用程序都必须以同样的虚拟地址引用这个库。</li>
+<li>（会变的是物理地址中代码的重定位信息，而物理地址中库文件只有一份，所以所有虚拟地址中库文件位置要相同）</li>
+</ul>
+</li>
+<li><strong>位置无关代码</strong>：
+<ul>
+<li>加载到任何绝对地址都可以直接运行的代码。其所有的地址访问（包括代码和变量）都相对于某指针，常见的是IP、SP或BP。</li>
+<li>（和<strong>动态库重定位</strong>一样针对的是库文件内容而不是调用它的程序的内容）</li>
+</ul>
+</li>
+<li>共享库的数据段：<strong>除了.rodata，其它无法共享</strong>！
+<ul>
+<li>本质上讲 .rodata 可以共享，就像 .text 一样</li>
+<li>.rwdata .zidata .heap .stack 不可共享</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="指令流-ppt41">指令流 PPT4.1</h2>
+<p>前瞻：
+指令流的3个状态是什么？
+指令流执行顺序有哪些？
+在合作执行时，指令流让出 CPU 的两种方法</p>
+<p><strong>顺序执行</strong>
+一个指令流执行完成后，再去执行另一个指令流。</p>
+<p><strong>合作执行</strong>：<strong>自愿放弃</strong>
+指令流在不需要CPU的时候可以自愿放弃CPU。<strong>自愿放弃CPU</strong> 以及 <strong>执行完毕</strong> 是交还CPU控制权的唯二方法。</p>
+<p><strong>并发执行</strong>/<strong>抢占式执行</strong></p>
+<p><strong>上下文</strong></p>
+<ul>
+<li>一个指令流的上下文就是足够使其恢复被打断时的状态的内容。</li>
+<li>这一般包括了其 <strong>寄存器组</strong> 和 <strong>执行栈</strong>。在切换指令流时，一个非常方便的做法就是把寄存器组保存在执行栈上，合适时再恢复</li>
+</ul>
+<p>![[Pasted_image_20251217152534.png]]</p>
+<p>阻塞态：阻塞态通常是因为线程在等待某些资源（如I/O操作）而进入的状态（与时间片用完无关）</p>
+<hr>
+<h2 id="线程-ppt4142">线程 PPT4.1、4.2</h2>
+<p>前瞻
+线程的上下文和状态放在用户程序里面还是操作系统里面？</p>
+<p><strong>线程</strong> 是 <strong>时间分配</strong> 的基本对象
+优先级一般用一个数值来代表，在绝大多数系统中，数字越 <strong>小</strong>，优先级越高。
+Windows 的优先级数字越<strong>大</strong>，优先级越高</p>
+<p><strong>线程控制块</strong> TCB
+<strong>操作系统</strong>（说明是在操作系统中，回答前瞻问题） 用以描述和管理线程的内核对象，一般至少包括线程的 <strong>时间预算、优先级、运行状态及上下文</strong>。</p>
+<p>线程的上下文
+线程上下文：和指令流上下文一样，线程的上下文也是其<strong>寄存器组</strong>。
+线程的状态：和指令流状态一样：运行、就绪、阻塞</p>
+<p>问题：线程的上下文和状态放在用户程序里面还是操作系统里面？
+Linux：每个线程独立的内核栈，将通用寄存器上下文保存在内核栈里面（方法2）
+现在有两种方法：
+方法1：使用一个内核栈，切换线程时将上下文拷贝保存到 TCB 中
+方法2：每个线程有独立的内核栈，上下文保存在内核栈中。
+两者区别：？</p>
+<h3 id="处理器调度算法">处理器调度算法</h3>
+<p>时间片轮转法 RR：RR 是抢占式的，因为它会打断超时线程的执行。</p>
+<hr>
+<h2 id="进程-ppt51">进程 PPT5.1</h2>
+<p>前瞻：</p>
+<ol>
+<li>进程是什么？</li>
+</ol>
+<h3 id="程序内的分配">程序内的分配</h3>
+<p><strong>分配</strong></p>
+<ul>
+<li>应用程序的某个<strong>指令流发出</strong>一个从堆中申请内存的<strong>请求</strong>。</li>
+<li>算法将从<strong>堆</strong>切出一部分内存并返回给这个请求。</li>
+<li>C语言的 <strong>malloc、calloc</strong> 等函数会从堆中申请内存。
+<strong>释放</strong></li>
+<li>指令流不再使用这个内存块，并将其归还回堆中供以后申请。</li>
+<li>C语言的 <strong>free</strong> 函数将会释放内存，将内存归还给堆。</li>
+</ul>
+<p><strong>离线分配法</strong></p>
+<ul>
+<li>用最小的堆满足某个分配</li>
+</ul>
+<p><strong>在线算法</strong></p>
+<ul>
+<li><strong>竞争比</strong>：
+![[Pasted_image_20251218165337.png]]</li>
+</ul>
+<p><strong>进程</strong></p>
+<ul>
+<li>操作系统提供给应用程序的一种对地址空间的抽象机制。它是 <strong>内存分配</strong> 的基本对象。</li>
+<li>而线程是 <strong>时间分配</strong> 的基本对象</li>
+<li>进程与线程：线程通过在进程里运行，将CPU时间转化为对地址空间（以及其它资源）的一个访问操作次序，从而实现应用程序的功能。</li>
+</ul>
+<p>应用程序视角：在应用程序看来，自己的逻辑组织是一系列段。
+操作系统视角：在操作系统看来，应用程序的空间组织是一个或一系列进程。</p>
+<p>PPT5.1 <strong>Belady异常</strong>：在某些资源分配机制下，增加资源反而会造成性能下降和效率降低的现象。</p>
+<ul>
+<li>出现原因：没有 <strong>栈式性质</strong>，或称 <strong>包含性性质</strong></li>
+</ul>
+<h3 id="页面置换的其它考量">页面置换的其它考量</h3>
+<p><strong>运行是最低目标</strong></p>
+<ul>
+<li>操作系统往往会给多得多的页，来覆盖程序的工作集，保证程序能高效运行。</li>
+</ul>
+<p><strong>抖动</strong>（Thrashing）</p>
+<ul>
+<li>当被分配的页数小于当前工作集的时候，缺页率会大幅增长。</li>
+<li>工作集有短期、中期和长期三个层面，抖动也是这样，存在着短期抖动、中期抖动和长期抖动。</li>
+</ul>
+<p><strong>分配策略的动态性</strong></p>
+<ul>
+<li>一个进程的页数量可以是静态决定的也可以是动态调整的。</li>
+<li>如果工作集的大小已知，只要将页数量设置为那个固定值就好了；</li>
+<li>如果出现阶段性的需求，就需要动态决定进程需要多少页框。</li>
+</ul>
+<p><strong>置换策略的全局性</strong></p>
+<ul>
+<li>页置换可以仅仅在一个进程内部发生，也可以在进程间发生。</li>
+<li>前者配合静态分配可以将一个进程引发的抖动限制在自身之内，但页利用效率低；</li>
+<li>后者配合动态分配则正好相反，可能使一个进程的抖动影响其它进程。</li>
+</ul>
+<p>操作系统并不知道指令流的存在。</p>
+<hr>
+<h3 id="进程的实现ppt52">进程的实现PPT5.2</h3>
+<p>进程控制块 Process Control Block  PCB</p>
+<ul>
+<li>至少包含进程 Process 的<strong>地址空间描述符表</strong>及一些<strong>其他权限表</strong></li>
+<li>身份信息、统计信息、线程信息</li>
+<li>
+<ul>
+<li>总是位于内核空间</li>
+</ul>
+</li>
+<li>与 TCB 不同，没有内核模式的 CPU 不需要也无法（用硬件手段）实现PCB</li>
+</ul>
+<hr>
+<h2 id="设备管理ppt7">设备管理PPT7</h2>
+<p>软件：
+硬件：</p>
+<p>高速设备：数据传输速率高于或接近CPU处理能力的设备。
+低速设备：数据传输速率低于CPU处理能力的设备。</p>
+<p>块设备：一般是外存，其 I/O 需要被缓冲
+字符设备：鼠标键盘打印机等，不需要缓冲，
+其它设备：网卡等，其I/O需要非常复杂的缓冲方式。</p>
+<p>假脱机设备：多个任务无法真正同时占用该设备，但由于该设备具备请求队列，因此可将多个任务的请求并发提交到该队列，设备将以较长的等待间隔依次响应这些请求。</p>
+<p>鼠标键盘数据传输方式：中断（最好）
+键盘扫描码：分按下键和释放键</p>
+<hr>
+<p><strong>时钟源</strong>：时间基准
+<strong>晶体振荡器</strong>：Crystal</p>
+<ul>
+<li>简称晶振</li>
+<li>以石英晶体为核心的一种频率基准器件
+<strong>定时器</strong> Timer</li>
+<li>带可编程计数上限的计数器。</li>
+<li>一组D触发器负责计数，另一组 Timer 触发器则储存一个上限值。</li>
+<li>一个比较器负责比较这两组值，一旦计数值达到上限值（溢出），就将计数值重置为0。
+<strong>定时器中断</strong></li>
+<li>一旦定时器的输入时钟频率已知，那么其溢出的时间间隔（时间片）也就决定了。我们可以设置定时器在每次溢出时产生一个中断报告给操作系统，操作系统就能够强制定期启动调度器。</li>
+</ul>
+<p><strong>实时时钟</strong> Real-Time Clock  RTC</p>
+<ul>
+<li>电子万年历
+<strong>实时时钟中断</strong></li>
+<li>和定时器中断不同，实时时钟中断仅在特殊场合使用。</li>
+<li>实时时钟可以设置闹钟，一旦闹钟时间点到，便允许向操作系统发送一个中断。该中断除了做日常事件提醒外还可以触发主板定时开关机。</li>
+</ul>
+<p>系统启动时，从实时时钟读取当前时间，然后系统便自行维护时间的走动。
+系统中的一切行为都以系统时间为基准。
+问题一	随着系统的运行，系统时间和实时时钟时间产生差异怎么办？
+以实时时钟为准。</p>
+<p><strong>系统时间</strong></p>
+<ul>
+<li>不是什么定时器</li>
+</ul>
+<p><strong>软定时器</strong></p>
+<ul>
+<li>用系统定时器作为时基来模拟一系列的软件定时器。</li>
+</ul>
+<hr>
+<h2 id="块设备外存ppt7">块设备（外存）PPT7</h2>
+<p><strong>硬盘的接口</strong>
+机械硬盘等外存的接口是文件系统，提供按文件名存取文件内容的功能。</p>
+<hr>
+<h2 id="条件变量">条件变量</h2>
+<ol>
+<li>
+<p>阻塞（并入队）	Wait（and Queue）</p>
+<ul>
+<li>当条件不满足时调用的原子操作。</li>
+<li>需要传入当前指令流所持有的锁；</li>
+<li>当前指令流将阻塞，将自己加入等待队列，并等待唤醒。</li>
+<li>这个操作总是释放当前指令流持有的锁，令其它指令流获得进入临界区的机会。</li>
+</ul>
+</li>
+<li>
+<p>唤醒（并出队）	Signal/Wakeup（and Dequeue）</p>
+<ul>
+<li>当判断条件可能满足时使用的原子操作。</li>
+<li>它将从等待队列头部唤醒一个指令流，并使被唤醒的指令流重新获得锁。<strong>即让唤醒的指令流阻塞在锁上</strong></li>
+<li>如果当前没有指令流在等待（也即等待队列为空），此次唤醒将丢失。</li>
+</ul>
+</li>
+<li>
+<p>唤醒全部	Signal/Wakeup All</p>
+<ul>
+<li>唤醒等待队列中所有的指令流，并使其中随机一个获得锁。</li>
+<li>其它的无法获得锁的指令流继续因为得不到锁而阻塞。此时这些阻塞的指令流并非阻塞在条件变量上，而是阻塞在锁上；</li>
+<li>一旦那个当前持有锁的指令流释放锁，那些阻塞在锁上的指令流中的其中一个就会立即获取锁而继续执行，直到所有的指令流都获取过一遍锁。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id=""></h2>
+<h3 id="死锁条件">死锁条件</h3>
+<p><strong>互斥条件</strong>	系统中存在有一定互斥性的资源。
+<strong>持有条件</strong>	指令流已获得的资源不释放，且新请求不撤销。
+<strong>循环等待</strong>	指令流互相循环等待资源释放，不能进展。</p>
+<p>其中，持有条件又可以细分为如下两条：
+<strong>保持请求</strong>	指令流不主动放弃已经持有的资源。
+<strong>无法剥夺</strong>	不允许指令流互相剥夺资源；非抢占。</p>
+<hr>
+<h2 id="问题">问题</h2>
+<ol>
+<li>_______（类型的）操作系统中，应用程序必须请求守护进程中的策略分配敏感资源，守护进程则互相通信或转而使用内核提供的机制完成这些分配操作。PPT2</li>
+<li>能对敏感资源进行操作、仅能在内核模式下执行的指令叫 <strong>特权指令</strong>。PPT2P66</li>
+<li>为何要给 INT3 分配特殊的单字节编码?</li>
+</ol>
+<hr>
+<h2 id="要背">要背</h2>
+<p><strong>调度算法</strong></p>
+<ol>
+<li>FCFS 先来先服务</li>
+<li>SJF 短作业优先</li>
+<li>FP 固定优先级</li>
+<li>RR 时间片轮转</li>
+<li>FPRR</li>
+<li>HRRN 相应比高优先(Highest Response Ratio Next)</li>
+</ol>
+<p>文件
+<strong>属性</strong>：</p>
+<ol>
+<li>文件名</li>
+<li>文件大小、创建日期、修改日期、文件权限</li>
+</ol>
+<p><strong>逻辑结构</strong>（程序员看到的逻辑上的文件组织形式）</p>
+<ol>
+<li>字节流结构（最基本的结构）</li>
+<li>记录结构</li>
+<li>索引结构</li>
+</ol>
+<p><strong>文件的存储</strong>：</p>
+<ol>
+<li>连续分配法</li>
+<li>链接分配法（每个块内部放置一个指针，指向下一个块）</li>
+<li>扩展分配法</li>
+<li>索引分配法</li>
+</ol>
+<h3 id="名词">名词</h3>
+<p><strong>文件系统</strong></p>
+<ul>
+<li>将文件中的文件块按照一定的方法最终映射到物理设备上的物理块，并在物理存储器特性的限制下提供尽可能高的信息管理效率。提供这种功能的软件栈称为文件系统。</li>
+</ul> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

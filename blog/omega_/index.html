@@ -1,0 +1,243 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>体系结构 互连网络与Omega网络概念总结 - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>体系结构 互连网络与Omega网络概念总结</h1> <div class="article-meta"> <time datetime="2026-06-03T00:00:00.000Z"> 2026年6月3日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <h1 id="互连网络与-omega-网络概念总结">互连网络与 Omega 网络概念总结</h1>
+<h2 id="1-互连函数">1. 互连函数</h2>
+<p>互连函数描述输入到输出的映射 $f(i)=j$（N 个结点）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">函数</th><th align="left">定义</th><th align="left">例子 (N=8)</th></tr></thead><tbody><tr><td align="left"><strong>恒等</strong></td><td align="left">$f(x)=x$</td><td align="left">3→3</td></tr><tr><td align="left"><strong>Cubeₖ</strong></td><td align="left">$f(x)=x \oplus 2^k$（第 k 位取反）</td><td align="left">Cube₁(3)=3⊕2=1</td></tr><tr><td align="left"><strong>PM2I₊ᵢ</strong></td><td align="left">$f(x)=(x+2^i) \bmod N$</td><td align="left">PM2₊₁(3)=(3+2) mod 8=5</td></tr><tr><td align="left"><strong>PM2I₋ᵢ</strong></td><td align="left">$f(x)=(x-2^i) \bmod N$</td><td align="left">PM2₋₁(3)=(3-2) mod 8=1</td></tr><tr><td align="left"><strong>均匀洗牌 σ</strong></td><td align="left">二进制左循环移一位</td><td align="left">σ(3)=σ(011)=110=6</td></tr><tr><td align="left"><strong>逆洗牌 σ⁻¹</strong></td><td align="left">二进制右循环移一位</td><td align="left">σ⁻¹(3)=σ⁻¹(011)=101=5</td></tr><tr><td align="left"><strong>蝶式 β</strong></td><td align="left">MSB 与 LSB 互换</td><td align="left">β(3)=β(011)=110=6</td></tr><tr><td align="left"><strong>位反转 ρ</strong></td><td align="left">全部位序反转</td><td align="left">ρ(3)=ρ(011)=110=6</td></tr></tbody></table>
+<hr>
+<h2 id="2-均匀洗牌perfect-shuffle">2. 均匀洗牌（Perfect Shuffle）</h2>
+<p><strong>概念</strong>：像洗扑克牌一样交叉排列，二进制上就是<strong>循环左移一位</strong>。</p>
+<p><strong>例子 (N=8)</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>上半 0 1 2 3  → 交错后 →  0 4 1 5 2 6 3 7</span></span>
+<span class="line"><span>下半 4 5 6 7</span></span></code></pre>
+<p>二进制验证：σ(1)=σ(001)=010=2，σ(4)=σ(100)=001=1。</p>
+<hr>
+<h2 id="3-交换开关se">3. 交换开关（SE）</h2>
+<p><strong>概念</strong>：2×2 开关，有四种状态，但点对点通信只用两种：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">状态</th><th align="left">连线</th><th align="left">条件</th></tr></thead><tbody><tr><td align="left"><strong>直通 S</strong></td><td align="left">上入→上出，下入→下出</td><td align="left">上入目标位=0，下入目标位=1</td></tr><tr><td align="left"><strong>交叉 C</strong></td><td align="left">上入→下出，下入→上出</td><td align="left">上入目标位=1，下入目标位=0</td></tr></tbody></table>
+<p><strong>冲突</strong>：两输入要求同一输出端口时发生。即两输入的目标控位相同（都=0 或都=1）。</p>
+<p><strong>例子</strong>：上入目标位=0，下入目标位=0 → 都要求走上出 → 冲突！</p>
+<hr>
+<h2 id="4-omega-网络拓扑">4. Omega 网络拓扑</h2>
+<p><strong>概念</strong>：$\log_2 N$ 级 SE，级间用均匀洗牌连接。术语：</p>
+<ul>
+<li><strong>第 0 级</strong>：输入处理器直连的第一级 SE（还没经过任何洗牌）</li>
+<li><strong>洗牌</strong>：上一级 SE 的输出线经过均匀洗牌重排，变成下一级 SE 的输入</li>
+<li><strong>第 1 级</strong>：经过一次洗牌后的 SE</li>
+<li><strong>第 2 级</strong>：经过两次洗牌后的 SE（直连输出处理器）</li>
+</ul>
+<p>即：<code>输入 → 第0级SE → 洗牌 → 第1级SE → 洗牌 → 第2级SE → 输出</code></p>
+<p>两条固定规则：</p>
+<ul>
+<li><strong>规则 A</strong>：每级相邻两线绑进一个 SE</li>
+<li><strong>规则 B</strong>：级间连线 = 均匀洗牌</li>
+</ul>
+<p><strong>例子 (N=8)</strong>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>输入处理器        第0级SE         第1级SE          第2级SE        输出处理器</span></span>
+<span class="line"><span>   0  ────[SE₀]───洗牌───[SE₀]───洗牌───[SE₀]──── 0</span></span>
+<span class="line"><span>   1  ────┘              ───┘              ───┘      1</span></span>
+<span class="line"><span>   2  ────[SE₁]──────────[SE₁]──────────[SE₁]──── 2</span></span>
+<span class="line"><span>   3  ────┘              ───┘              ───┘      3</span></span>
+<span class="line"><span>   4  ────[SE₂]──────────[SE₂]──────────[SE₂]──── 4</span></span>
+<span class="line"><span>   5  ────┘              ───┘              ───┘      5</span></span>
+<span class="line"><span>   6  ────[SE₃]──────────[SE₃]──────────[SE₃]──── 6</span></span>
+<span class="line"><span>   7  ────┘              ───┘              ───┘      7</span></span></code></pre>
+<ul>
+<li>第 0 级 SE 配对：(0,1)(2,3)(4,5)(6,7) — 输入直连，相邻即相邻处理器。</li>
+<li>第 1 级 SE 配对：洗牌后变成 (0,4)(1,5)(2,6)(3,7) — 规则没变（仍是相邻线进同一 SE），是线上的人被洗牌换了位置。</li>
+</ul>
+<hr>
+<h2 id="5-目的地标号路由">5. 目的地标号路由</h2>
+<p><strong>概念</strong>：从输入到目标输出，每级由目标地址的一位控制走线上还是线下。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">级</th><th align="left">控制位</th><th align="left">0</th><th align="left">1</th></tr></thead><tbody><tr><td align="center">第 0 级</td><td align="left">MSB (bit n-1)</td><td align="left">走上出</td><td align="left">走下出</td></tr><tr><td align="center">第 1 级</td><td align="left">bit (n-2)</td><td align="left">走上出</td><td align="left">走下出</td></tr><tr><td align="center">第 2 级</td><td align="left">LSB (bit 0)</td><td align="left">走上出</td><td align="left">走下出</td></tr></tbody></table>
+<p><strong>例子 (N=8，从输入 0 到输出 6)</strong>：目标 6 = 110₂</p>
+<ul>
+<li>第 0 级：MSB=1 → 走下出</li>
+<li>第 1 级：bit1=1 → 走下出</li>
+<li>第 2 级：LSB=0 → 走上出</li>
+</ul>
+<hr>
+<h2 id="6-se-状态判定">6. SE 状态判定</h2>
+<p><strong>概念</strong>：查同一 SE 两个输入的目标控位：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">上入控位</th><th align="center">下入控位</th><th align="center">SE 状态</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">1</td><td align="center">直通 S</td></tr><tr><td align="center">1</td><td align="center">0</td><td align="center">交叉 C</td></tr><tr><td align="center">0</td><td align="center">0</td><td align="center">冲突</td></tr><tr><td align="center">1</td><td align="center">1</td><td align="center">冲突</td></tr></tbody></table>
+<p><strong>例子</strong>：SE 收到输入 2（目标=010，当前级控位=0）和输入 4（目标=001，当前级控位=0）→ 都是 0 → 冲突！</p>
+<hr>
+<h2 id="7-冲突判断流程">7. 冲突判断流程</h2>
+<p><strong>概念</strong>：逐级检查。任一级有冲突 → 该置换不能一次通过 Omega 网络。</p>
+<p><strong>例子 — 位反转 β(abc)=cba (N=8)</strong>：</p>
+<ul>
+<li>第 0 级 SE₀(0,4)：β(0)=000(MSB=0↑)，β(4)=001(MSB=0↑) → 同走上出 → 冲突</li>
+<li>全部四个 SE 均冲突 → <strong>位反转不能一次通过 Omega</strong></li>
+</ul>
+<hr>
+<h2 id="8-再循环-omega-网络">8. 再循环 Omega 网络</h2>
+<p><strong>概念</strong>：输出反馈回输入再次路由，最多 $\log_2 N$ 次。N=8 时最多 2 次（共 6 级 > Benes 的 5 级 → 等效可重排无阻塞）。</p>
+<p><strong>例子</strong>：位反转 N=8，第 1 次全冲突 → 反馈再走第 2 次 → 可通过。</p>
+<hr>
+<h2 id="9-解题速查">9. 解题速查</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">项目</th><th align="left">公式</th></tr></thead><tbody><tr><td align="left">级数</td><td align="left">$\log_2 N$</td></tr><tr><td align="left">每级 SE 数</td><td align="left">$N/2$</td></tr><tr><td align="left">均匀洗牌</td><td align="left">二进制循环左移一位</td></tr><tr><td align="left">SE 直通条件</td><td align="left">上入控位=0，下入控位=1</td></tr><tr><td align="left">SE 交叉条件</td><td align="left">上入控位=1，下入控位=0</td></tr><tr><td align="left">SE 冲突条件</td><td align="left">两输入控位相同</td></tr><tr><td align="left">再循环上限</td><td align="left">$\log_2 N$ 次</td></tr></tbody></table> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

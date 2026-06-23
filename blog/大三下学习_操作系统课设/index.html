@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>操作系统课设 - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>操作系统课设</h1> <div class="article-meta"> <time datetime="2026-03-26T00:00:00.000Z"> 2026年3月26日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <h2 id="switch_linuxs"><strong>switch_linux.s</strong></h2>
+<p>这是一个经典的<strong>声明与定义分离</strong>（Declaration vs Definition）的链接过程。我们可以将其简化为四个步骤来记忆：</p>
+<h3 id="1-声明-the-promise---c-侧">1. 声明 (The Promise) - C++ 侧</h3>
+<p>在 thread.h 中，C++ 代码“承诺”有一个叫 <code>SWITCH</code> 的函数存在，虽然它自己并没有写函数体。</p>
+<ul>
+<li>使用 <code>extern "C"</code> 告诉编译器：这个函数的名字不要乱改（不要进行 C++ Name Mangling），保持原样叫 <code>SWITCH</code>。</li>
+<li><strong>代码位置</strong>：thread.h
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#F97583">extern</span><span style="color:#9ECBFF"> "C"</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    void</span><span style="color:#B392F0"> SWITCH</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Thread</span><span style="color:#F97583"> *</span><span style="color:#FFAB70">oldThread</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Thread</span><span style="color:#F97583"> *</span><span style="color:#FFAB70">newThread</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+</li>
+</ul>
+<h3 id="2-调用-the-call---c-侧">2. 调用 (The Call) - C++ 侧</h3>
+<p>在 scheduler.cc 中，<code>Scheduler::Run</code> 函数像调用普通函数一样调用了 <code>SWITCH</code>。</p>
+<ul>
+<li>此时编译器只知道名字和参数，它会在生成的 <code>.o</code> 文件里留下一个**“待填空的洞”**（undefined reference），标记这里需要跳转到 <code>SWITCH</code> 的地址。</li>
+<li><strong>代码位置</strong>：scheduler.cc
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#B392F0">SWITCH</span><span style="color:#E1E4E8">(oldThread, nextThread);</span></span></code></pre>
+</li>
+</ul>
+<h3 id="3-定义-the-real-deal---汇编侧">3. 定义 (The Real Deal) - 汇编侧</h3>
+<p>在 switch-linux.s 中，汇编代码实现了真正的 <code>SWITCH</code> 逻辑，并将其标记为<strong>全局符号</strong>。</p>
+<ul>
+<li><code>.globl SWITCH</code>：告诉汇编器，“把 <code>SWITCH</code>这个标签暴露给外部世界使用”。如果没有这一行，C++ 代码是找不到它的。</li>
+<li><code>SWITCH:</code>：这是汇编函数的入口地址标签。</li>
+<li><strong>代码位置</strong>：switch-linux.s
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="asm"><code><span class="line"><span style="color:#E1E4E8">    .globl SWITCH</span></span>
+<span class="line"><span style="color:#B392F0">SWITCH:</span></span>
+<span class="line"><span style="color:#6A737D">    # ... 保存 oldThread 寄存器 ...</span></span>
+<span class="line"><span style="color:#6A737D">    # ... 恢复 newThread 寄存器 ...</span></span>
+<span class="line"><span style="color:#F97583">    ret</span></span></code></pre>
+</li>
+</ul>
+<h3 id="4-链接--the-handshake---构建阶段">4. 链接 ( The Handshake) - 构建阶段</h3>
+<p>最后，<code>make</code> 调用链接器（<code>ld</code>）将所有 <code>.o</code> 文件合并成可执行文件 <code>nachos</code>。</p>
+<ul>
+<li>链接器发现 <code>scheduler.o</code> 有一个调用 <code>SWITCH</code> 的“空洞”。</li>
+<li>链接器发现 <code>switch-linux.o</code> 提供了一个叫 <code>SWITCH</code> 的地址。</li>
+<li><strong>链接器把“空洞”填上 <code>SWITCH</code> 的实际地址。</strong></li>
+</ul>
+<hr>
+<p><strong>简记公式</strong>：</p>
+<blockquote>
+<p><strong>C++头文件声明 (extern “C”)</strong>  +  <strong>汇编文件定义 (.globl)</strong>  ->  <strong>链接器配对 (Linker resolves symbol)</strong></p>
+</blockquote>
+<h2 id="代码框架">代码框架</h2>
+<p>运行的 <code>nachos</code> 只有一个进程，只有一根由于 <a href="vscode-file://vscode-app/c:/Users/xujuli/AppData/Local/Programs/Microsoft%20VS%20Code/ce099c1ed2/resources/app/out/vs/code/electron-browser/workbench/workbench.html">main</a> 函数启动的“主线”。</p>
+<p>全局参数
+system:</p>
+<ul>
+<li>currentThread</li>
+<li>scheduler</li>
+<li>interrupt</li>
+<li>timer</li>
+</ul>
+<h3 id="实验三">实验三</h3>
+<ul>
+<li>
+<p>main.cc</p>
+<ul>
+<li>initialize()
+<ul>
+<li>初始化全局参数</li>
+</ul>
+</li>
+<li>ProdCons()</li>
+<li>currentThread->Finish();</li>
+<li>结束</li>
+</ul>
+</li>
+<li>
+<p>Fork()</p>
+<ul>
+<li>StackAllocate(func, arg);</li>
+<li>interrupt->SetLevel()
+<ul>
+<li>ChangeLevel()</li>
+<li><strong><code>[[#^OneTick]]</code>()</strong>
+<ul>
+<li>修改totalTicks和userTicks</li>
+<li>ChangeLevel()</li>
+<li>CheckIfDue(False)</li>
+<li>ChangeLevel()</li>
+<li>if 要返回 : currentThread->Yield()//RR
+<ul>
+<li>scheduler->FindNextToRun()</li>
+<li>scheduler->ReadyToRun(this)</li>
+<li>scheduler->Run(next)
+<ul>
+<li>将next变为当前进程</li>
+<li><strong>SWITCH()</strong></li>
+<li>结束</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>scheduler->ReadyToRun()
+<ul>
+<li>thread->setStatus(READY)</li>
+<li>readyList->Append(thread);</li>
+</ul>
+</li>
+<li>interrupt->SetLevel() 开关中断</li>
+</ul>
+</li>
+</ul>
+<p>synch.cc :</p>
+<ul>
+<li>
+<p>Semaphore::P()</p>
+<ul>
+<li>interrupt->SetLevel()</li>
+<li>value—</li>
+<li>interrupt->SetLevel()</li>
+</ul>
+</li>
+<li>
+<p>Semaphore::V()</p>
+<ul>
+<li>scheduler->ReadyToRun(thread);</li>
+</ul>
+</li>
+<li>
+<p>时间流动 ^OneTick</p>
+<ul>
+<li>OneTick</li>
+<li>interrupt->SetLevel()（PS：仅当开中断时 OneTick）</li>
+<li>P、V、fork 等</li>
+</ul>
+</li>
+</ul>
+<h3 id="实验四五">实验四五</h3>
+<p><img src="/images/Pasted_image_20260319171203.png" alt=""></p>
+<ul>
+<li>
+<p>main</p>
+<ul>
+<li>Initialize()</li>
+<li>-cp
+<ul>
+<li>COPY(from,to)
+<ul>
+<li>fp=fopen(from)</li>
+<li>fseek ftell fseek</li>
+<li>Create(to,fileLength)</li>
+<li>openfile=Open(to)</li>
+<li>Write()</li>
+<li>结束</li>
+</ul>
+</li>
+<li>结束</li>
+</ul>
+</li>
+<li>-p -r -l -D -t</li>
+<li>…以上为以实现，以下为要实现</li>
+<li>-ap|hap 将一个UNIX 文件写入 Nachos 文件末尾
+<ul>
+<li>fopen() Open()</li>
+<li>start = openFile->Length() （-hap 则 /2)</li>
+<li>Seek</li>
+<li>while 没写完 : Write</li>
+</ul>
+</li>
+<li>currentThread->Finish()</li>
+<li>end</li>
+</ul>
+</li>
+<li>
+<p>WriteAt</p>
+<ul>
+<li>if (position + numBytes) > fileLength
+<ul>
+<li>GetFreeMapFile()</li>
+<li>FetchFrom(): ReadAt()到 freeMap 的 map 中(unsigned int* )</li>
+<li><strong>Extend()</strong>
+<ul>
+<li>if 需要的扇区数大于总数 return false</li>
+<li>NumClear() 返回空闲扇区数</li>
+<li>if NumClear()&#x3C; numSectorsNew-numSectors : return false</li>
+<li>for range(numSectors,numSectorsNew)
+<ul>
+<li>freeMap->Find()将空闲扇区 Mark 为 1 同时返回扇区号</li>
+</ul>
+</li>
+<li>更新文件头：numBytes numSectors return TRUE</li>
+<li>结束</li>
+</ul>
+</li>
+<li>if Extend 成功
+<ul>
+<li>hdr->WriteBack(headerSector) 带 lock</li>
+<li>WriteBack(GetFreeMapFile())</li>
+</ul>
+</li>
+<li>结束</li>
+</ul>
+</li>
+<li>将内容写入扇区</li>
+<li>结束</li>
+</ul>
+</li>
+</ul>
+<p><strong>扩展 <code>-ap</code></strong>
+<code>OpenFile::WriteAt</code> 中的注释功能实现</p>
+<ol>
+<li><strong>修改 <code>FileHeader</code> 类 (filehdr.h/filehdr.cc)</strong>：添加了 <code>Extend</code> 方法，用于在需要时分配新的磁盘扇区并更新文件头信息。</li>
+<li><strong>修改 <code>FileSystem</code> 类 (filesys.h)</strong>：公开了 <code>GetFreeMapFile()</code> 方法，允许其他模块获取空闲块位图文件，以便在分配新扇区时读取和更新位图。</li>
+<li><strong>修改 <code>OpenFile</code> 类 (openfile.h/openfile.cc)</strong>：
+<ul>
+<li>在构造函数中记录了文件头的扇区号 <code>headerSector</code>，以便在其变化（如文件大小时）写回磁盘。</li>
+<li>在 <code>WriteAt</code> 中实现了自动扩展逻辑：当写入位置超出当前文件大小时，会调用 <code>Extend</code> 尝试扩展文件。成功扩展后，会立即将更新后的文件头和空闲块位图写回磁盘，然后继续执行写入操作。如果扩展失败（如磁盘已满或超出最大文件大小），则保持原有的截断行为。</li>
+</ul>
+</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>磁盘  v                      v</span></span>
+<span class="line"><span>7    7.2         8          8.6      9</span></span>
+<span class="line"><span>buf</span></span>
+<span class="line"><span>0    0.2         1          1.6      2</span></span>
+<span class="line"><span>写入</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span></span></span></code></pre> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

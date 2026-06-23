@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>图形学 - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>图形学</h1> <div class="article-meta"> <time datetime="2026-01-12T00:00:00.000Z"> 2026年1月12日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <p><strong>问题</strong>
+散度和旋度是什么？</p>
+<p>插值曲线：经过所有点（给定点）
+拟合曲线：不需要经过所有点</p>
+<p>散度和旋度是什么？</p>
+<p><strong>Bezier曲线</strong>：
+n次Bezier曲线：有n+1个控制点
+$$
+p(t)=\sum_{i=0}^{n}P_iB_{i,n}(t)
+$$
+$$
+B_{i,n}=C_{n}^{i}t^i(1-t)^{n-i}
+$$
+$$
+P_{0}^{’}(t)=(1-t)P_0+tP_1
+$$
+<strong>B样条曲线</strong>：</p>
+<h2 id="明暗处理">明暗处理</h2>
+<h3 id="gouraud-明暗处理"><strong>Gouraud 明暗处理</strong></h3>
+<p>对顶点进行处理
+双线性光强差值
+问题：高光模糊或不自然</p>
+<h3 id="phong-明暗处理"><strong>Phong 明暗处理</strong></h3>
+<p>双线性法向差值
+以时间为代价，引入镜面反射
+算法流程：</p>
+<ol>
+<li>计算每个点的坐标和法线向量</li>
+<li>对法线差值，这样<strong>三角形内部的每一个像素，都拥有了一个从顶点法线平滑过渡而来的、略微不同的法线向量。</strong></li>
+<li>逐像素光照计算</li>
+</ol>
+<p>PS：顶点法线代表的是<strong>该顶点所在位置的曲面“平均朝向”</strong>。计算它最常见的方法是：<br>
+<strong>将该顶点所连接的所有多边形面的法线，取一个平均值（通常是加权平均）。</strong></p>
+<h3 id="两者对比">两者对比</h3>
+<p>Phong 高光经常出现在多边形内部
+Gouraud 多边形内部无高光</p>
+<h2 id="整体光照模型">整体光照模型</h2>
+<p>两类方法：</p>
+<ol>
+<li>光线追踪</li>
+<li>辐射度</li>
+</ol>
+<h3 id="光线追踪-raytracing">光线追踪 RayTracing</h3>
+<p>终止条件：</p>
+<ol>
+<li>光线未碰到如何物体</li>
+<li>碰到背景</li>
+<li>光线强度衰减到一定值</li>
+<li>反射或折射一定次数</li>
+</ol>
+<p><strong>求交加速</strong></p>
+<h2 id="mvp">MVP</h2>
+<h2 id="平移旋转">平移旋转</h2>
+<p>先平移再旋转再平移
+旋转围绕 (0,0)</p>
+<p>$R_{45}$ 旋转 45度</p>
+<p>$T(1,0)$ 平移 (1,0)</p>
+<p>先旋转再平移： $T(1,0) R_{45}$
+（顺序从右往左）</p>
+<h2 id="透视投影书115">透视投影（书11.5）</h2>
+<p>!重要</p> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

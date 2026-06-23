@@ -1,0 +1,143 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>gdb 操作系统 - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>gdb 操作系统</h1> <div class="article-meta"> <time datetime="2026-03-07T00:00:00.000Z"> 2026年3月7日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <h1 id="使用">使用</h1>
+<ul>
+<li>
+<p>一般调试的是 C/C++ 程序</p>
+</li>
+<li>
+<p>在编译时，我们必须要把调试信息加到可执行文件中</p>
+</li>
+<li>
+<p><code>gdb</code> 使用</p>
+<ul>
+<li>方法1：<code>gdb program</code> 例：<code>gdb ./nachos</code></li>
+<li>方法2：<code>gdb &#x3C;program> core</code> <code>[[#^core]]</code></li>
+<li>方法3：<code>gdb &#x3C;program> &#x3C;PID></code> <code>[[#^getPID]]</code></li>
+<li><code>GDB</code> 启动时，可以加上一些 <code>GDB</code> 的启动开关，如 <code>[[#^-s]]</code>、<code>[[#^-c]]</code>、<code>[[#^-d]]</code></li>
+</ul>
+</li>
+<li>
+<p><code>break</code> 设置断点</p>
+<ul>
+<li>例： <code>break 16</code> 在源程序第 <code>16</code> 行处。</li>
+<li><code>break func</code> 在函数 <code>func()</code> 入口处。</li>
+<li><code>b main</code> 可以用 <code>b</code> 代替</li>
+</ul>
+</li>
+<li>
+<p><code>run</code> 运行程序，调试前都需要先运行</p>
+<ul>
+<li><code>r</code> 可简写</li>
+<li>可在 run 命令后加参数：<code>(gdb) run source.txt dest.txt</code>，模拟 <code>&#x3C;program> &#x3C;参数1> &#x3C;参数2></code></li>
+<li><code>run</code> 前可通过 <code>set args</code> 设置参数，等价于 <code>run 参数</code></li>
+</ul>
+</li>
+<li>
+<p><code>next</code> 单条语句执行，<strong>不</strong>进入程序</p>
+<ul>
+<li><code>n</code></li>
+</ul>
+</li>
+<li>
+<p><code>step</code> 单步执行，<strong>进入</strong>程序</p>
+<ul>
+<li><code>s</code> 可简写</li>
+</ul>
+</li>
+<li>
+<p><code>continue</code> 继续运行</p>
+</li>
+<li>
+<p><code>l</code> 相当于 <code>list</code>，从当前第一行开始例出原码。</p>
+<ul>
+<li>可用于忘记当前位置时查看</li>
+</ul>
+</li>
+<li>
+<p><code>info</code></p>
+<ul>
+<li><code>info break</code> 查看断点信息</li>
+</ul>
+</li>
+<li>
+<p>回车 重复上一次命令</p>
+</li>
+<li>
+<p><code>print</code> 打印变量的值</p>
+<ul>
+<li><code>p</code> 可简写</li>
+<li>例：<code>print i</code> 打印 i 的内容</li>
+</ul>
+</li>
+<li>
+<p><code>bt</code> 查看函数堆栈</p>
+<ul>
+<li>可以看到函数传进去的参数</li>
+</ul>
+</li>
+<li>
+<p><code>finish</code> 退出函数</p>
+<ul>
+<li>主函数 main 不能退出</li>
+</ul>
+</li>
+<li>
+<p>双击 tab 补齐命令的全称，有重复则把其例出来</p>
+<ul>
+<li>还可根据函数的前缀找到所有相关函数，例：<code>b DE</code> 按一次<code>tab</code>找到所有 <code>DE</code> 开头的函数</li>
+</ul>
+</li>
+<li>
+<p><code>shell</code></p>
+<ul>
+<li>可在 <code>gdb</code> 下输入 <code>shell</code>、<code>make</code> （相当于 <code>shell make</code> ）</li>
+<li>例 <code>(gdb)shell ls</code> 查看当前目录下有哪些文件而不需要退出 <code>gdb</code></li>
+</ul>
+</li>
+<li>
+<p><code>core</code>文件 当程序因为非法操作（比如访问了不该访问的内存、除以零等）而非正常退出时，操作系统会把该程序崩溃那一瞬间的内存状态、寄存器信息、堆栈信息等全部“转储”（Dump）到一个文件中，这个文件通常叫 <code>core</code> 或 <code>core.&#x3C;pid></code>，一般系统为关闭生成 ^core</p>
+</li>
+<li>
+<p><code>ps aux | grep program_name</code> ^getPID</p>
+</li>
+<li>
+<p><code>-symbols</code>，<code>-s</code> 从指定文件中读取符号表信息，并把他用在可执行文件中。 ^-s</p>
+</li>
+<li>
+<p><code>-core</code>、<code>-c</code>，调试时 core dump 的 core 文件。例：<code>gdb main -c core.1234</code>，其中core.1234 是崩溃后生成的 core 文件名 ^-c</p>
+</li>
+<li>
+<p>-<code>directory</code> <code>-d</code> 加入一个源文件的搜索路径。默认搜索路径是环境变量中PATH所定义的路径。 ^-d</p>
+</li>
+<li></li>
+<li>
+<p><strong>TTY</strong> 泛指 <strong>终端设备（Terminal Device）</strong>。</p>
+<ul>
+<li><strong>平时用的 TTY：</strong>
+<ul>
+<li>在图形界面打开的终端窗口（比如 VS Code 的终端），通常对应 0, 1 等（伪终端）。</li>
+<li>在真实的物理机控制台，对应 tty1 到 tty6。</li>
+</ul>
+</li>
+<li><strong><code>tty &#x3C;device></code> ：</strong>
+<ul>
+<li><strong>含义：</strong> 告诉 GDB，“<strong>别把程序的输入输出混在现在用的这个终端窗口里，把它扔到另一个终端设备上去运行</strong>”</li>
+<li><strong>场景：</strong>
+<ol>
+<li>程序输出太快太乱，干扰了在 GDB 里敲命令。</li>
+<li>你需要调试一个带图形界面（库如 ncurses）的程序，它会把屏幕弄花，导致你看不到 GDB 的断点信息。</li>
+</ol>
+</li>
+<li><strong>做法：</strong>
+<ol>
+<li>打开一个新的终端窗口，输入命令 <code>tty</code> 查看它是谁（比如 2）。</li>
+<li>回到 GDB 窗口，输入 <code>tty /dev/pts/2</code>。</li>
+<li>输入 <code>run</code>。</li>
+</ol>
+</li>
+<li><strong>结果：</strong> GDB 的命令还是在你原来的窗口敲，但程序的 output 全都跑到了那个新窗口里 ^1</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>

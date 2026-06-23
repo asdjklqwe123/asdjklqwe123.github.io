@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>操作系统 - asdjklqwe123&#39;s Blog</title><meta name="description" content="study notes"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><style>:root{--bg: #fafafa;--text: #333;--muted: #888;--accent: #667eea;--card-bg: #fff;--border: #e5e5e5;--radius: 8px;--max-width: 800px}@media(prefers-color-scheme:dark){:root{--bg: #1a1a2e;--text: #e0e0e0;--muted: #999;--accent: #8b9cf7;--card-bg: #222244;--border: #333355}}*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans SC,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh;display:flex;flex-direction:column}header{background:var(--card-bg);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}nav{max-width:var(--max-width);margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}.logo{font-size:20px;font-weight:700;color:var(--accent);text-decoration:none}.nav-links{display:flex;gap:24px}.nav-links a{color:var(--text);text-decoration:none;font-size:15px;transition:color .2s}.nav-links a:hover{color:var(--accent)}main{flex:1;max-width:var(--max-width);width:100%;margin:0 auto;padding:40px 20px}footer{text-align:center;padding:24px 20px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}.post-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:box-shadow .2s}.post-card:hover{box-shadow:0 4px 20px #00000014}.post-card h2{margin-bottom:8px}.post-card h2 a{color:var(--text);text-decoration:none}.post-card h2 a:hover{color:var(--accent)}.post-card .meta{font-size:13px;color:var(--muted);margin-bottom:12px}.post-card .description{color:var(--muted);font-size:15px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.tag{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:13px}.article{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px}.article h1{font-size:28px;margin-bottom:12px}.article .article-meta{font-size:14px;color:var(--muted);margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border)}.article-content{font-size:16px;line-height:1.8}.article-content h2{font-size:22px;margin-top:36px;margin-bottom:16px}.article-content h3{font-size:18px;margin-top:28px;margin-bottom:12px}.article-content p{margin-bottom:16px}.article-content ul,.article-content ol{margin-bottom:16px;padding-left:24px}.article-content li{margin-bottom:6px}.article-content code{background:color-mix(in srgb,var(--accent) 12%,transparent);padding:2px 6px;border-radius:4px;font-size:14px}.article-content pre{background:#1e1e2e;color:#cdd6f4;padding:20px;border-radius:var(--radius);overflow-x:auto;margin-bottom:20px;font-size:14px;line-height:1.6}.article-content pre code{background:none;padding:0;font-size:14px}.article-content blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin-bottom:16px;background:color-mix(in srgb,var(--accent) 8%,transparent);border-radius:0 var(--radius) var(--radius) 0}.article-content img{max-width:100%;border-radius:var(--radius)}.article-content table{width:100%;border-collapse:collapse;margin-bottom:20px}.article-content th,.article-content td{border:1px solid var(--border);padding:10px 14px;text-align:left}.article-content th{background:color-mix(in srgb,var(--accent) 12%,transparent)}.back-link{display:inline-block;margin-top:32px;color:var(--accent);text-decoration:none}.back-link:hover{text-decoration:underline}
+</style></head> <body> <!-- 导航栏 --> <header> <nav> <a href="/" class="logo">asdjklqwe123's Blog</a> <div class="nav-links"> <a href="/">首页</a> <a href="/blog">博客</a> <a href="/course">专业课</a> <a href="/algorithm">算法</a> <a href="/ml">机器学习</a> <a href="/other">其它</a> <a href="/about">关于</a> </div> </nav> </header> <!-- 页面内容 --> <main>  <article class="article"> <h1>操作系统</h1> <div class="article-meta"> <time datetime="2025-12-18T00:00:00.000Z"> 2025年12月18日 </time>   &middot; asdjklqwe123 </div>  <div class="article-content"> <h2 id="寄存器保护机制详解">寄存器保护机制详解</h2>
+<p>这是一个在过程调用（或称函数调用）中至关重要的概念，确保了不同函数或过程在执行时不会因为共享有限的CPU寄存器资源而相互破坏数据。</p>
+<h3 id="核心问题为什么需要寄存器保护">核心问题：为什么需要寄存器保护？</h3>
+<p>CPU的通用寄存器数量有限。这些寄存器是所有函数共用的资源。当一个函数（调用者，Caller）调用另一个函数（被调用者，Callee）时，会面临一个问题：</p>
+<ul>
+<li>调用者可能正在使用一些寄存器存放尚未计算完的中间结果（例如，循环计数器、局部变量等）。</li>
+<li>被调用者为了执行自己的任务，也必然要使用这些寄存器。</li>
+<li>如果被调用者随意覆盖了调用者正在使用的寄存器值，那么当调用恢复时，原来的数据就丢失了，程序将产生错误。</li>
+</ul>
+<hr>
+<h3 id="解决方案调用约定与寄存器分类">解决方案：调用约定与寄存器分类</h3>
+<p>这套机制的核心是一份名为调用约定的协议。调用约定规定了函数调用过程中如何传递参数、如何返回值，以及哪些寄存器由谁负责保护。</p>
+<p>根据调用约定，寄存器通常被分为两类：</p>
+<h4 id="1-调用者保存寄存器">1. 调用者保存寄存器</h4>
+<ul>
+<li>别名：易失性寄存器</li>
+<li>规则：如果调用者希望在这些寄存器中的值在函数调用后保持不变，那么调用者必须在发起调用之前，主动将这些寄存器的值保存到自己的栈帧中；在函数调用返回后，再从栈中恢复这些值。</li>
+<li>被调用者的权利：被调用函数可以随意使用并修改这些寄存器，无需负责恢复它们的原始值。</li>
+<li>设计初衷：用于存放临时变量和中间结果。因为调用者知道自己哪些值还需要用，由它来负责保存是最经济的。</li>
+<li>典型例子：
+<ul>
+<li>x86-64: <code>rax</code>, <code>rcx</code>, <code>rdx</code>, <code>rsi</code>, <code>rdi</code>, <code>r8-r11</code></li>
+<li>RISC-V: <code>t0-t6</code>, <code>a0-a7</code> (参数寄存器)</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-被调用者保存寄存器">2. 被调用者保存寄存器</h4>
+<ul>
+<li>别名：非易失性寄存器</li>
+<li>规则：如果被调用者要使用这些寄存器，它必须在函数开始时将这些寄存器的原始值压入栈（自己的栈帧）中保存；在函数返回前，再从栈中恢复这些原始值。</li>
+<li>调用者的权利：调用者可以放心地认为这些寄存器的值在函数调用前后是一致的。它无需做任何保存和恢复操作。</li>
+<li>设计初衷：用于存放需要跨函数调用保持的长期变量。例如，循环的外层指针、全局变量地址等。</li>
+<li>典型例子：
+<ul>
+<li>x86-64: <code>rbx</code>, <code>rsp</code>, <code>rbp</code>, <code>r12-r15</code></li>
+<li>RISC-V: <code>s0-s11</code>, <code>sp</code> (栈指针)</li>
+</ul>
+</li>
+</ul>
+<h4 id="特殊寄存器">特殊寄存器</h4>
+<ul>
+<li>栈指针：如x86的<code>rsp</code>、RISC-V的<code>sp</code>。其值必须被严格遵守规则管理，通常由被调用者保存，或者有非常特殊的硬件规则。</li>
+<li>返回地址：存放函数调用结束后应返回的地址。由<code>CALL</code>指令自动压栈，<code>RET</code>指令自动出栈。在RISC-V等架构中，它存放在一个普通寄存器（如<code>ra</code>）中，那么这个<code>ra</code>寄存器就需要被当作被调用者保存寄存器来处理。</li>
+</ul>
+<hr>
+<h3 id="工作机制全景一个函数调用的生命周期">工作机制全景：一个函数调用的生命周期</h3>
+<p>让我们结合栈帧的概念，看看这个机制如何运作：</p>
+<ol>
+<li>
+<p>调用者准备阶段：</p>
+<ul>
+<li>将需要传递给被调用者的参数放入约定的寄存器（如x86-64的<code>rdi</code>, <code>rsi</code>…）或栈中。</li>
+<li>如果它使用了任何调用者保存寄存器且其中的值在调用后还需要使用，它会将这些值压入自己的栈帧中保存。</li>
+</ul>
+</li>
+<li>
+<p>执行CALL指令：</p>
+<ul>
+<li>将返回地址压入栈。</li>
+<li>跳转到被调用函数的起始地址。</li>
+</ul>
+</li>
+<li>
+<p>被调用者开场白：</p>
+<ul>
+<li>分配自己的栈帧（移动栈指针<code>rsp</code>）。</li>
+<li>将需要使用的被调用者保存寄存器的值压入自己的栈帧中保存。</li>
+<li>执行函数的主体逻辑，可以自由使用任何寄存器。</li>
+</ul>
+</li>
+<li>
+<p>被调用者收尾工作：</p>
+<ul>
+<li>将函数返回值放入约定寄存器（如x86-64的<code>rax</code>）。</li>
+<li>从栈中恢复所有之前保存的被调用者保存寄存器的值。</li>
+<li>销毁自己的栈帧（恢复栈指针<code>rsp</code>）。</li>
+<li>执行<code>RET</code>指令，从栈中弹出返回地址并跳回调用者。</li>
+</ul>
+</li>
+<li>
+<p>调用者恢复阶段：</p>
+<ul>
+<li>从约定寄存器（<code>rax</code>）中获取返回值。</li>
+<li>从自己的栈帧中恢复之前保存的调用者保存寄存器的值。</li>
+<li>继续执行后续代码。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="优势与重要性">优势与重要性</h3>
+<ol>
+<li>模块化与封装：函数无需知道其他函数内部使用了哪些寄存器，只需遵守共同的约定即可安全协作。这是软件工程中“关注点分离”原则在硬件层面的体现。</li>
+<li>效率：避免了不必要的保存和恢复。临时结果只在真正需要时才保存，减少了内存访问次数，提高了性能。</li>
+<li>可靠性：确保了程序执行的正确性，防止了因寄存器数据被意外覆盖而导致的难以调试的错误。</li>
+</ol>
+<h3 id="总结">总结</h3>
+<p>寄存器保护机制是一套通过调用约定实现的、由调用者和被调用者共同协作的规则。它通过将寄存器划分为调用者保存和被调用者保存两类，并利用栈作为临时存储媒介，高效且可靠地解决了有限寄存器资源在多函数调用环境中的共享冲突问题。这是现代计算机系统能够支持复杂、模块化软件运行的基石之一。</p>
+<h2 id="处理器调度算法">处理器调度算法</h2>
+<ol>
+<li>非抢占式 : 调度仅在线程结束时发生</li>
+<li>抢占式 : 随时</li>
+<li>
+<ul>
+<li>等待时间 : W</li>
+<li>运行时间 : R</li>
+<li>周转时间 : T</li>
+</ul>
+</li>
+</ol>
+<h3 id="fcfs-first-come-first-served-先来先服务">FCFS First-Come First-Served 先来先服务</h3>
+<p>动态优先级</p>
+<h3 id="sjf-shortest-remainingjob-first-短作业优先">SJF Shortest-(Remaining)Job First 短作业优先</h3>
+<p>动态优先级</p>
+<h3 id="hrrn-highest-responce-ratio-next-响应比高优先">HRRN Highest Responce Ratio Next 响应比高优先</h3>
+<ul>
+<li>动态优先级</li>
+<li>响应比 : T/R</li>
+</ul>
+<h3 id="fp-fixed-priority-固定优先级">FP Fixed-Priority 固定优先级</h3>
+<h3 id="rr-round-robin-时间片轮转法">RR Round-Robin 时间片轮转法</h3>
+<ul>
+<li>动态优先级</li>
+<li>可以看作是 FCFS 的一种改进：任务先来先执行，但执行时间到就换成下一个任务，等到所有任务都轮到一遍了，再回到第一个任务执行。</li>
+<li>抢占式，因为它会打断超时线程的执行。</li>
+</ul>
+<h3 id="fprr-fixed-priority-round-robin-固定优先级时间片轮转法">FPRR Fixed-Priority Round-Robin 固定优先级时间片轮转法</h3>
+<ul>
+<li>同一个优先级的任务采取时间片轮转法</li>
+<li>不同优先级的任务之间采取严格的抢占式固定优先级调度</li>
+<li>结合了两者的优点</li>
+</ul>
+<h2 id="42-处理器调度机制与实现">4.2 处理器调度机制与实现</h2>
+<p>系统中的线程总览</p>
+<ul>
+<li>按优先级划分</li>
+<li>按来源划分</li>
+<li>按特权划分</li>
+</ul>
+<h3 id="操作系统的线程调度windows">操作系统的线程调度：Windows</h3>
+<p>Windows的优先级数字越大，优先级越高。与 Linux 不同</p>
+<h2 id="页">页</h2>
+<h3 id="页表">页表</h3>
+<ul>
+<li>页表本身作为存储在内存中的数据，也会成为 CPU 缓存的目标。</li>
+</ul>
+<h3 id="tlb-快表">TLB 快表</h3>
+<ul>
+<li>TLB 是 CPU 内存管理单元（MMU）的一部分，用于加速虚拟地址到物理地址的转换。</li>
+<li>缓存了最近使用的页表项（PTEs），每个页表项包含了虚拟页号（VPN）到物理页框号（PFN）的映射关系，以及一些控制位（如访问权限、脏位等）。</li>
+<li>多级页表中，TLB 中直接缓存最终级别的页表项，TLB 命中并不要求上级页表项也在 TLB 中</li>
+<li>TLB 各个情况：
+<ul>
+<li>TLB hit，直接访问内存取数据</li>
+<li>TLB miss，但是在内存中有对应页</li>
+<li>TLB miss，同时内存中没有对应页，发生缺页</li>
+</ul>
+</li>
+</ul>
+<h2 id="主存储器分配机制与实现">主存储器分配机制与实现</h2>
+<h3 id="系统调用">系统调用</h3>
+<p>linux中，分为内核空间（高地址）和用户空间（低地址）</p>
+<p>系统调用为用户空间进入内核空间的接口
+如close、read、write为系统级别的函数
+如fopen、fclose、fread、fwrite为用户级别的函数</p>
+<p>程序由用户进入内核层时，会将用户层的状态先封存起来，然后到内核层运行代码，运行结束以后，从内核层出来到用户层时，再把数据加载回来。</p>
+<h3 id="内存管理系统调用">内存管理系统调用</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. brk() 和 sbrk()</span></span></code></pre>
+<h3 id="分页">分页</h3>
+<p><strong>5.2讲P17</strong></p>
+<p>CR0：控制CPU的一些重要工作模式
+如分页机制是否开启，以及CPU运作在保护模式还是实模式。</p>
+<p>CPU若是在保护模式就有内核模式和用户模式的区分
+否则就没有</p>
+<p>CR3：放置页表的最高层的物理地址
+进程切换的核心。进程切换就是修改CR3，使其指向不同的页表
+64位下，低12位存放PCID</p>
+<p>PCID：？</p>
+<p>PML5：最顶层的页目录
+PML4：中间高层的页目录
+在翻译过程中，只要某一层的权限是不存在的，那么该权限就视为不存在。
+PDPT：中间中层的页目录 <strong>5.2讲P21问题</strong>-> 超级页
+PGD：中间低层的页目录。
+PT：最底层的页目录。因为这个页目录已经是最低级别，<strong>不会再存在更低级别的页目录了</strong></p>
+<p>超级页
+全局页</p>
+<p>多队列请求分页机制？</p>
+<h3 id="dlmalloc"><code>dlmalloc</code></h3>
+<p>块队列：<strong>5.2P30</strong> 将空闲块按大小分为127个队列
+16-512号队列按照8字节的等间距展开（刚好63个）（号为所占空间）
+从576号队列开始，队列按照指数间距展开（？不到30个，凑不到127）</p>
+<h2 id="ppt61-文件存储">PPT6.1 文件存储</h2>
+<p><strong>本章关键词</strong>：
+FCB (file control black)
+混合索引 （和页表一样？）
+直接内容法</p>
+<p><strong>p32 混合索引法的继续改进</strong>：说明 FCB 本身自带索引
+如：固定3级索引</p>
+<ul>
+<li>FCB 作为三级索引（1个块）</li>
+<li>指向二级索引（1个块）</li>
+<li>指向一级索引（1个块）</li>
+<li>指向内容（1个块）</li>
+</ul>
+<p>目录：
+FSCB：文件系统超级块
+FCB：如文件A的FCB：存储文件 A 的索引
+如
+根目录FCB->根目录文件</p>
+<p>索引节点导致出现：硬链接和软链接
+硬链接：目录存放文件名字，指向索引节点表的索引节点，索引节点存放 FCB 其它内容，负责找到对应文件
+软链接：不是文件系统级别的，本质不是文件系统功能</p>
+<p>p50元文件系统
+为了与其它操作系统兼容，我们不得不在系统中支持多个文件系统
+文件系统的文件系统，又叫虚拟文件系统（Virtual File System，VFS）。</p>
+<p>访问控制矩阵	Access Control Matrix，ACM
+访问控制矩阵	Access Control List，ACL
+基于角色的访问控制	Role-Based Access Control，RBAC
+基于属性的访问控制	Attribute-Based Access Control，ABAC</p>
+<h2 id="62">6.2</h2>
+<p><strong>关键词</strong>
+GPT：分区
+GUID：Global Unique ID
+MBR兼容头：
+CHS：已经被淘汰，用柱面C、磁头H、分区S定位
+LBA：？</p>
+<p>系统启动：INITRAMFS
+（1）不知道！
+（2）嵌入式系统可以不需要INITRAMFS，</p>
+<h1 id="7">7</h1>
+<p><strong>小测</strong>
+时钟发生器
+定时器
+实时时钟</p>
+<p>定时器中断
+实时时钟中断</p>
+<p><strong>作业</strong>
+题目五：注意 LBA 中从 0 开始编号，而 CHS 中 S 从 1 开始编号，所以要减 1</p>
+<h1 id="8">8</h1>
+<h2 id="互斥与同步">互斥与同步</h2>
+<p>条件变量专有而信号量没有：全局唤醒</p>
+<p><strong>FAA</strong> 通常指的是 <strong>Fetch-and-Add</strong> 指令。原子指令
+<strong>它返回的是该变量在增加 <em>之前</em> 的旧值</strong>。
+<code>old_value = fetch_and_add(&#x26;variable, increment)</code></p>
+<p><strong>CAS（Compare-And-Swap）操作</strong>。原子指令
+猜错了就等待，反之交互</p>
+<p>无等待数据结构
+0 1 2 3 4 5 6 7 8 9
+r        w</p>
+<hr>
+<h2 id="ppt-81">PPT 8.1</h2>
+<p><strong>好自旋锁的三个标准</strong>：P14</p>
+<ul>
+<li>
+<p>互斥访问：Mutual Exclusion（忙则等待）临界区保证互斥，任何时候只有一个指令流。</p>
+</li>
+<li>
+<p>全局进展：Global Progress（空闲让进）如果目前临界区没有占用，则在有指令流请求时应当满足它，不会陷入全局死锁。</p>
+</li>
+<li>
+<p>局部进展：Local Progress（有限等待，Bounded Waiting）任何一个指令流的等待时间都是有上界的，不会陷入局部或全局活锁。</p>
+</li>
+</ul>
+<p><strong>自旋锁缺点</strong>
+对于自旋锁，在不能获得锁时会频繁检查条件。这</p>
+<ol>
+<li>无谓地浪费了CPU，</li>
+<li>造成内存总线压力（尤其是多核系统），</li>
+<li>在指令流对线程多对一模型中是无法使用的（为什么？）</li>
+<li>此外由硬件原子指令实现的锁还无法确保公平性。
+<strong>阻塞锁</strong>
+阻塞锁与自旋锁的区别只有一个：当指令流无法获得锁时就停止执行，并等待锁的释放</li>
+</ol>
+<p>阻塞：是一个系统级、内核级机制</p>
+<p><strong>好阻塞锁的标准</strong>
+在好自旋锁的标准上增加一条“让权等待”，也即无法获得锁时应立即释放处理机。</p>
+<p><strong>阻塞锁缺点</strong>
+如果锁的并发度（指一齐竞争的线程数）很少，但并发争用行为很频繁、临界区很短，系统调用以及线程阻塞、切换和唤醒的开销就不可忽视了。</p>
+<hr>
+<h3 id="无锁数据结构-p39">无锁数据结构 P39</h3>
+<ul>
+<li>进入临界区不使用锁</li>
+<li>并不能保证操作不会失败</li>
+<li>即仅保证全局进展而不保证局部进展，也不一定保证公平性。
+RCU锁（RCU不是锁）Read-Copy-Update</li>
+</ul>
+<ol>
+<li>拷贝一份新节点</li>
+<li>修改该节点数据</li>
+<li>原子写操作将其插入原位，替换佬节点</li>
+<li>老节点在最后一个潜在读者读完它后释放
+问题一：潜在读者？
+在一定时间（安定期、宽限期）后老节点就被回收
+问题二：多个写者？
+在更新前继结点指针时使用 CMPXCHG（CAS），这样只有一位写者的版本可以提交成功</li>
+</ol>
+<p>ABA问题</p>
+<hr>
+<p>管程</p>
+<hr>
+<h3 id="无等待数据结构-p57">无等待数据结构 P57</h3>
+<ul>
+<li>进一步保障了所有的操作都必然成功，也即保障了局部进展。</li>
+<li>原子加载自增（Fetch-And-Add，FAA；x86 LOCK XADDL）指令</li>
+<li>链接读和条件写 Load-Linked(LL)/Store-Conditional(SC)</li>
+</ul>
+<hr>
+<h3 id="指令流间的合作">指令流间的合作</h3>
+<p><strong>同步原语</strong>：
+条件变量、</p>
+<p><strong>条件变量</strong>
+可以使指令流阻塞并等待，直到某个条件发生。
+它总是与一个锁配合使用：</p>
+<ul>
+<li>如果条件不满足，则指令流自动释放锁并加入等待队列；</li>
+<li>而当条件满足时，等待队列头部的指令流将被唤醒并自动恢复对锁的持有。</li>
+</ul>
+<p>MPSC：多生产者单消费者
+MPMC：多生产者多消费者</p>
+<hr>
+<h3 id="死锁和活锁">死锁和活锁</h3>
+<p><strong>死锁条件</strong></p>
+<ol>
+<li>互斥条件	系统中存在有一定互斥性的资源。</li>
+<li>持有条件	指令流已获得的资源不释放，且新请求不撤销。</li>
+<li>循环等待	指令流互相循环等待资源释放，不能进展。</li>
+</ol>
+<p>其中，持有条件又可以细分为如下两条：</p>
+<ol>
+<li>保持请求	指令流不主动放弃已经持有的资源。</li>
+<li>无法剥夺	不允许指令流互相剥夺资源；非抢占。</li>
+</ol>
+<hr>
+<h2 id="复习">复习</h2>
+<p>批处理系统和。系统特点
+系统是什么（定义必考）
+抽象概念：时间CPU、空间存储器
+新资源：更有时间性还是空间性</p>
+<p>异常和陷阱和（？）这3个有什么区别</p>
+<p>直接回填法和间接地址法优劣</p>
+<p>过程序言和尾声</p>
+<p>动态连接库最根本特点</p>
+<p>指令流执行顺序
+基本都是并发</p>
+<p>指令流3个状态</p>
+<p>页表不需要请求分页</p>
+<h3 id="7-1">7</h3>
+<h3 id="8-1">8</h3>
+<p>一共有多少种执行顺序
+死锁条件
+什么叫不安全区域</p>
+<p>银行家算法</p>
+<h3 id="其它">其它</h3>
+<p>ZFS ZFS 是一个先进的文件系统
+EXT4文件系统</p>
+<p>卷管理器</p>
+<p><code>fsck</code>，全称  File System Consistency Check，主要用于检查和修复 Linux 文件系统的不一致和错误。该工具用于解决潜在的文件系统问题。<code>fsck</code>可以为你提供检查和修复一切文件系统中的问题的功能，包括一些潜在的磁盘错误等。</p>
+<h1 id="复习-1">复习</h1>
+<p>内核结构有哪些
+IPC方法是什么</p>
+<h2 id="ppt-1">PPT 1</h2>
+<p>批处理系统：按照一定顺序，逐一执行事先编组好的成批计算任务
+分时系统：同时装入多个任务，每个任务分配一定的时间和空间运行</p>
+<p>典型的时分复用的部件是处理器，它又包括中央处理器和协处理器。
+典型的空分复用的部件是存储器，它又包括内存和外存。</p>
+<p>原则：操作系统目标，由需求决定
+设计：高层次抽象描述，逻辑功能
+实现：低层次具体描述，具体实施
+策略：资源管理的方法和政策
+机制：使用的功能和手段</p>
+<h2 id="ppt-2">PPT 2</h2>
+<p>图灵机</p>
+<p>计算机系统：硬件和软件
+软件：运行、组织、管理、维护机电设备和物理机制所使用的程序。主要包括系统软件和用户软件。在工程实现中，一般分主板固件、操作系统、中间件和应用程序四个主要部分。
+硬件：机电设备、物理机制，包括电路板、机箱机柜、连接件等。主要包括运算器、控制器、存储器、输入设备和输出设备。在工程实现中，一般分微处理器、存储器和输入输出设备三个主要部分，之间用系统总线连接。</p>
+<p>处理器的性能
+处理器与总线</p>
+<p>小端字节序是主流选择。8086是小端字节序。</p>
+<h3 id="处理器特权级">处理器特权级</h3>
+<p>硬件特权级：CPU硬件实现，分为用户模式（用户态）和内核模式（内核态）。</p>
+<p>用户模式：执行应用程序的模式，不允许直接访问系统的敏感资源。
+内核模式：执行操作系统的模式，可直接执行敏感指令和访问敏感资源。</p>
+<p>特权指令：能对系统中敏感资源进行操作的指令，仅能在内核模式下执行。</p> </div> <a href="/blog" class="back-link">&larr; 返回博客列表</a> </article>  </main> <!-- 页脚 --> <footer> <p>&copy; 2026 asdjklqwe123. Built with Astro.</p> </footer> </body></html>
