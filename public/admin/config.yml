@@ -8,7 +8,7 @@ backend:
 
 # Netlify Identity 网关站点（仅用于认证，不影响网站托管）
 # 在 Netlify 创建站点后，将下面的 site_url 改为你的 Netlify 站点 URL
-site_url: https://asdjklqwe123-blog-admin.netlify.app
+site_url: https://beautiful-kringle-696c3a.netlify.app
 
 media_folder: "public/images"
 public_folder: "/images"
