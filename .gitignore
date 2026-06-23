@@ -1,13 +1,28 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+
+# 环境变量
+.env
+.env.local
+
+# IDE
+.astro/
+*.tsbuildinfo
 .vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
+
+# 部署
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# OS
+.DS_Store
+Thumbs.db
 #Testing Output folder
 .output/
 #Extension App-file

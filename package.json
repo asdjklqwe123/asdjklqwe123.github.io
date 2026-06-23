@@ -1,7 +1,17 @@
 {
-  "name": "my-blog-api",
+  "name": "asdjklqwe123-blog",
+  "type": "module",
   "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
   "dependencies": {
-    "@upstash/redis": "^1.28.0"
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.12.0",
+    "typescript": "^5.8.3"
   }
 }

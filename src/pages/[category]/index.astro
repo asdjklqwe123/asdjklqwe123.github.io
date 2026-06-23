@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+const categoryMeta = {
+  course: { title: '专业课学习', icon: '📚', desc: '数据结构、计组、OS、计网等课程笔记' },
+  algorithm: { title: '算法学习', icon: '🧮', desc: '算法竞赛、LeetCode、算法设计与分析' },
+  ml: { title: '机器学习', icon: '🤖', desc: 'ML/DL 理论、项目实践、论文笔记' },
+  other: { title: '其它', icon: '📦', desc: '游戏、工具、杂项' },
+}
+
+export async function getStaticPaths() {
+  return ['course', 'algorithm', 'ml', 'other'].map((cat) => ({ params: { category: cat } }))
+}
+
+const { category } = Astro.params as { category: keyof typeof categoryMeta }
+const meta = categoryMeta[category]
+
+const allPosts = await getCollection('blog', ({ data }) =>
+  !data.draft && data.category === category
+)
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+)
+---
+
+<BaseLayout title={`${meta.title} - asdjklqwe123's Blog`} description={meta.desc}>
+  <div class="page-header">
+    <span class="icon">{meta.icon}</span>
+    <h1>{meta.title}</h1>
+    <p>{meta.desc}</p>
+  </div>
+
+  {
+    sortedPosts.length === 0 ? (
+      <div class="empty">
+        <span class="empty-icon">📭</span>
+        <p>暂无文章</p>
+        <p class="hint">在 <code>src/content/blog/</code> 创建 .md 文件并设置 <code>category: "{category}"</code></p>
+      </div>
+    ) : (
+      sortedPosts.map((post) => (
+        <article class="post-card">
+          <h2>
+            <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`}>
+              {post.data.title}
+            </a>
+          </h2>
+          <div class="meta">
+            <time datetime={post.data.publishDate.toISOString()}>
+              {post.data.publishDate.toLocaleDateString('zh-CN', {
+                year: 'numeric', month: 'long', day: 'numeric'
+              })}
+            </time>
+          </div>
+          <p class="description">{post.data.description}</p>
+          {post.data.tags.length > 0 && (
+            <div class="tags">
+              {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+          )}
+        </article>
+      ))
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-header {
+    text-align: center;
+    padding: 32px 0;
+  }
+  .page-header .icon { font-size: 56px; display: block; margin-bottom: 12px; }
+  .page-header h1 { font-size: 28px; margin-bottom: 8px; }
+  .page-header p { color: var(--muted); font-size: 15px; }
+
+  .empty { text-align: center; padding: 60px 0; color: var(--muted); }
+  .empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+  .hint { font-size: 13px; margin-top: 8px; }
+  .hint code { background: color-mix(in srgb, var(--accent) 12%, transparent); padding: 2px 6px; border-radius: 4px; }
+</style>

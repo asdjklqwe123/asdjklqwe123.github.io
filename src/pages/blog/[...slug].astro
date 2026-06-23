@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+
+// 生成静态路径
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft)
+  return posts.map((post) => ({
+    params: { slug: post.id.replace(/\.mdx?$/, '') },
+  }))
+}
+
+const { slug } = Astro.params
+// Astro v5 中 render() 不能通过 props 传递，需要在组件内重新获取
+const allPosts = await getCollection('blog', ({ data }) => !data.draft)
+const post = allPosts.find((p) => p.id.replace(/\.mdx?$/, '') === slug)
+
+if (!post) {
+  return Astro.redirect('/404')
+}
+
+const { Content } = await render(post)
+---
+
+<BaseLayout
+  title={`${post.data.title} - asdjklqwe123's Blog`}
+  description={post.data.description}
+>
+  <article class="article">
+    <h1>{post.data.title}</h1>
+    <div class="article-meta">
+      <time datetime={post.data.publishDate.toISOString()}>
+        {post.data.publishDate.toLocaleDateString('zh-CN', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}
+      </time>
+      {post.data.updatedDate && (
+        <span>
+          {' '}&middot; 更新于{' '}
+          {post.data.updatedDate.toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </span>
+      )}
+      {' '}&middot; {post.data.author}
+    </div>
+
+    {
+      post.data.tags.length > 0 && (
+        <div class="tags" style="margin-bottom:24px;">
+          {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      )
+    }
+
+    <div class="article-content">
+      <Content />
+    </div>
+
+    <a href="/blog" class="back-link">&larr; 返回博客列表</a>
+  </article>
+</BaseLayout>

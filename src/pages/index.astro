@@ -1,0 +1,192 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+// 获取所有博客文章，按日期排序，排除草稿
+const allPosts = await getCollection('blog', ({ data }) => !data.draft)
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+)
+---
+
+<BaseLayout title="asdjklqwe123's Blog" description="个人技术博客">
+  <div class="hero">
+    <h1>👋 欢迎来到我的博客</h1>
+    <p>记录学习、技术与生活的个人空间</p>
+  </div>
+
+  <!-- 分类卡片 -->
+  <div class="category-section">
+    <h2>📂 内容板块</h2>
+    <div class="category-grid">
+      <a href="/course" class="category-card course">
+        <span class="card-icon">📚</span>
+        <span class="card-title">专业课学习</span>
+        <span class="card-desc">数据结构、计组、OS、计网等课程笔记</span>
+      </a>
+      <a href="/algorithm" class="category-card algo">
+        <span class="card-icon">🧮</span>
+        <span class="card-title">算法学习</span>
+        <span class="card-desc">算法竞赛、LeetCode、算法设计与分析</span>
+      </a>
+      <a href="/ml" class="category-card ml">
+        <span class="card-icon">🤖</span>
+        <span class="card-title">机器学习</span>
+        <span class="card-desc">ML/DL 理论、项目实践、论文笔记</span>
+      </a>
+      <a href="/other" class="category-card other">
+        <span class="card-icon">📦</span>
+        <span class="card-title">其它</span>
+        <span class="card-desc">游戏、工具、杂项</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="posts-section">
+    <h2>📝 最新文章</h2>
+    {
+      sortedPosts.length === 0 ? (
+        <div class="empty">
+          <p>📝 还没有文章，快去写第一篇吧！</p>
+          <p style="font-size:14px;color:var(--muted);margin-top:8px;">
+            直接在 <code>src/content/blog/</code> 目录下创建 .md 文件，<br/>
+            或者在 <a href="/admin/" style="color:var(--accent);">在线编辑器</a> 中撰写。
+          </p>
+        </div>
+      ) : (
+        sortedPosts.map((post) => (
+          <article class="post-card">
+            <h2>
+              <a href={`/blog/${post.id.replace(/\.mdx?$/, '')}`}>
+                {post.data.title}
+              </a>
+            </h2>
+            <div class="meta">
+              <time datetime={post.data.publishDate.toISOString()}>
+                {post.data.publishDate.toLocaleDateString('zh-CN', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            </div>
+            <p class="description">{post.data.description}</p>
+            {
+              post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+                </div>
+              )
+            }
+          </article>
+        ))
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 48px 0 32px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  /* ===== 分类卡片 ===== */
+  .category-section {
+    margin-bottom: 48px;
+  }
+
+  .category-section h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .category-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+  }
+
+  .category-card.course::before {
+    background: linear-gradient(90deg, #43e97b, #38f9d7);
+  }
+  .category-card.algo::before {
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+  }
+  .category-card.ml::before {
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+  }
+  .category-card.other::before {
+    background: linear-gradient(90deg, #fa709a, #fee140);
+  }
+
+  .card-icon {
+    font-size: 36px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .posts-section h2 {
+    font-size: 22px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .empty {
+    text-align: center;
+    padding: 48px 0;
+    color: var(--muted);
+  }
+</style>
