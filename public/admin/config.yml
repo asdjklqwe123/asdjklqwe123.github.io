@@ -3,6 +3,7 @@ backend:
   name: github
   repo: asdjklqwe123/asdjklqwe123.github.io
   branch: main
+  site_domain: chenlmj.netlify.app
   base_url: https://chenlmj.netlify.app
   auth_endpoint: /.netlify/functions/auth
 
